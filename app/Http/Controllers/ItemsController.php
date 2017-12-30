@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Customer;
-use Illuminate\Support\Facades\DB;
+use App\Order;
+//use Illuminate\Support\Facades\DB;
 use Input;
 
 
@@ -40,6 +41,24 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
 
+        // get new order no
+        $lastOrderRecord = Order::latest()->first();
+
+        if($lastOrderRecord){
+            $newOrderNo =  $lastOrderRecord->id + 1;
+        }else{
+            $newOrderNo =  1;
+        }
+
+        // get customer id
+        $customerName = $request->customer_name;
+        $customer_record = Customer::where('co_name',$customerName)->first();
+        $customer_id = $customer_record->id;
+
+        $order = new Order;
+        $order->customer_id = $customer_id;
+        $order->save();
+
         $description = Input::get('description');
         $paper = Input::get('paper');
         $size = Input::get('size');
@@ -50,33 +69,32 @@ class ItemsController extends Controller
         $qty = Input::get('qty');
         $price = Input::get('price');
         $cost = Input::get('cost');
-        //$order_id = Input::get('order_id');
-        //$customer_id = Input::get('customer_id');
         
-        $arr = [];
+        $items = [];
 
         for ($i = 0; $i < count($description); $i++) {
 
-            array_push($arr,
+            array_push($items,
 
-                ['description' => $description[$i],
-                'paper' =>$paper[$i],
-                'size' =>$size[$i],
-                'colors' =>$colors[$i],
-                'copies' =>$copies[$i],
-                'serial' =>$serial[$i],
-                'pack' =>$pack[$i],
-                'qty' =>$qty[$i],
-                'price' =>$price[$i],
-                'cost' =>$cost[$i],
-                'order_id' =>1,
-                'customer_id' =>1,
-                
+                [
+
+                    'description' => $description[$i],
+                    'paper' =>$paper[$i],
+                    'size' =>$size[$i],
+                    'colors' =>$colors[$i],
+                    'copies' =>$copies[$i],
+                    'serial' =>$serial[$i],
+                    'pack' =>$pack[$i],
+                    'qty' =>$qty[$i],
+                    'price' =>$price[$i],
+                    'cost' =>$cost[$i],
+                    'order_id' =>$newOrderNo,
+                    'customer_id' =>$customer_id,
                 
                 ]);
         }
         
-        Item::insert($arr);  
+        Item::insert($items);  
 
     }
 

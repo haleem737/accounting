@@ -81,12 +81,16 @@ border-bottom: 5px solid #f1f1f1;
     <div class='row' id='header'>
 
         <!-- search customer name -->
+    
         <div class='col-md-7 offset-1'>
 
+        <form action='/items' method='POST'>
+        {{ csrf_field() }}
+        
             <div class='col-md-7'>
                 <div class="form-group">
                     <label for="formGroupExampleInput"><h4>customer Name</h4></label>
-                    <input type="text" name="customer-name" id="customer-name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
+                    <input type="text" name="customer_name" id="customer_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
                 </div>
             </div>
 
@@ -109,9 +113,6 @@ border-bottom: 5px solid #f1f1f1;
     <div class='row' style='padding:0 50px'>
 
         <div class='col-md-12'>
-
-            <form action='/items' method='POST'>
-            {{ csrf_field() }}
 
                 <!-- table -->
                 <table id='order-table' class='talbe-striped'>
@@ -178,7 +179,7 @@ border-bottom: 5px solid #f1f1f1;
 $(document).ready(function(){
 
 // using typehahead plugin to search for customer from database
-$('#customer-name').typeahead({
+$('#customer_name').typeahead({
     highlight: true,
     source: function(query, result){
         $.ajax({
