@@ -27,7 +27,13 @@ class OrdersController extends Controller
     {
         // get new job order number
         $lastOrderRecord = Order::latest()->first();
-        $newOrderNo =  $lastOrderRecord->order_id + 1;
+
+        if($lastOrderRecord){
+            $newOrderNo =  $lastOrderRecord->id + 1;
+        }else{
+            $newOrderNo =  1;
+        }
+
         // add 000 to order no
         $newOrderNoPadded= sprintf("%04d", $newOrderNo);
         

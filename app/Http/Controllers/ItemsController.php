@@ -1,8 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Item;
+use App\Customer;
+use Illuminate\Support\Facades\DB;
+use Input;
+
+
 
 class ItemsController extends Controller
 {
@@ -13,7 +18,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        //
+        return view('items.index');
     }
 
     /**
@@ -23,7 +28,7 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create');
     }
 
     /**
@@ -34,7 +39,45 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $description = Input::get('description');
+        $paper = Input::get('paper');
+        $size = Input::get('size');
+        $colors = Input::get('colors');
+        $copies = Input::get('copies');
+        $serial = Input::get('serial');
+        $pack = Input::get('pack');
+        $qty = Input::get('qty');
+        $price = Input::get('price');
+        $cost = Input::get('cost');
+        //$order_id = Input::get('order_id');
+        //$customer_id = Input::get('customer_id');
+        
+        $arr = [];
+
+        for ($i = 0; $i < count($description); $i++) {
+
+            array_push($arr,
+
+                ['description' => $description[$i],
+                'paper' =>$paper[$i],
+                'size' =>$size[$i],
+                'colors' =>$colors[$i],
+                'copies' =>$copies[$i],
+                'serial' =>$serial[$i],
+                'pack' =>$pack[$i],
+                'qty' =>$qty[$i],
+                'price' =>$price[$i],
+                'cost' =>$cost[$i],
+                'order_id' =>1,
+                'customer_id' =>1,
+                
+                
+                ]);
+        }
+        
+        Item::insert($arr);  
+
     }
 
     /**

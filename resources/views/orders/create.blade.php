@@ -26,7 +26,7 @@ margin-bottom:30px;
 }
 
 #controls{
-margin-left:60px;
+margin-left:50px;
 margin-bottom:10px;
 }
 
@@ -106,54 +106,61 @@ border-bottom: 5px solid #f1f1f1;
     </div>
 
     <!-- table div -->
-    <div class='row' style='padding:0 60px'>
+    <div class='row' style='padding:0 50px'>
 
         <div class='col-md-12'>
 
-            <!-- table -->
-            <table id='order-table' class='talbe-striped'>
-            
-                    <!-- table header -->
-                    <tr id='table-header' align='center'>
-                    
-                        <th class='col-md-.1' style='font-weight:normal'>#</th>
-                        <th class='col-md-4' style='font-weight:normal'>Item Description</th>
-                        <th class='col-md-1' style='font-weight:normal'>Paper</th>
-                        <th class='col-md-.7' style='font-weight:normal'>Size</th>
-                        <th class='col-md-.7' style='font-weight:normal'>Colors</th>
-                        <th class='col-md-1' style='font-weight:normal'>Copies</th>
-                        <th class='col-md-1' style='font-weight:normal'>Serial</th>
-                        <th class='col-md-1' style='font-weight:normal'>Pack</th>
-                        <th class='col-md-1' style='font-weight:normal'>qty</th>
-                        <th class='col-md-.8' style='font-weight:normal'>Price</th>
-                        <th class='col-md-1' style='font-weight:normal'>Cost</th>
-                    
-                    </tr>
+            <form action='/items' method='POST'>
+            {{ csrf_field() }}
+
+                <!-- table -->
+                <table id='order-table' class='talbe-striped'>
                 
-                    <!--table inputs  -->
-                    <tr>
+                        <!-- table header -->
+                        <tr id='table-header' align='center'>
+                        
+                            <th class='col-md-.1' style='font-weight:normal'>#</th>
+                            <th class='col-md-3' style='font-weight:normal'>Item Description</th>
+                            <th class='col-md-1' style='font-weight:normal'>Paper</th>
+                            <th class='col-md-.7' style='font-weight:normal'>Size</th>
+                            <th class='col-md-.7' style='font-weight:normal'>Colors</th>
+                            <th class='col-md-.5' style='font-weight:normal'>Copies</th>
+                            <th class='col-md-1' style='font-weight:normal'>Serial</th>
+                            <th class='col-md-1' style='font-weight:normal'>Pack</th>
+                            <th class='col-md-1' style='font-weight:normal'>qty</th>
+                            <th class='col-md-1' style='font-weight:normal'>Price</th>
+                            <th class='col-md-1' style='font-weight:normal'>Cost</th>
+                        
+                        </tr>
+                    
+                        <!--table inputs  -->
+                        <tr>
 
-                        <td>
-                            <label class="custom-control custom-checkbox">
-                                <input name="item-row" type="checkbox" class="custom-control-input">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description row-index"></span>
-                            </label>
-                        </td>
+                            <td>
+                                <label class="custom-control custom-checkbox">
+                                    <input name="item-row" type="checkbox" class="custom-control-input">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description row-index"></span>
+                                </label>
+                            </td>
 
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
-                        <td><input type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="description[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="paper[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="size[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="colors[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="copies[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="serial[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="pack[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="qty[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="price[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>
+                            <td><input name="cost[]" type='text' class='col-md-12 form-control form-control-lg' autocomplete="off" ></td>    
 
-                    </tr>
-                            
-            </table>
+                        </tr>
+                                
+                </table>
+
+            <input type='submit' value='APPLY' class='btn btn-success pull-right'>
+            <div class="clearfix"></div>
 
         </div>
 
@@ -213,23 +220,23 @@ $(document).on('click', '.control' ,function() {
 
         var addRow =  jQuery(
 
+            '<tr> <td><label class="custom-control custom-checkbox"><input name="item-row" type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description row-index">' + row_index + '</span></label></td>' + 
+            '<td><input name="description[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="paper[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="size[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="colors[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="copies[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="serial[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="pack[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="qty[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="price[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
+            '<td><input name="cost[]" type="text" class="col-md-12 form-control form-control-lg autocomplete="off" "></td> </tr>' );
 
-                    '<tr> <td><label class="custom-control custom-checkbox"><input name="item-row" type="checkbox" class="custom-control-input"><span class="custom-control-indicator"></span><span class="custom-control-description row-index">' + row_index + '</span></label></td>' + 
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
-                    '<td><input type="text" class="col-md-12 form-control form-control-lg autocomplete="off" "></td> </tr>' );
-
-        $('#order-table').append(addRow);
-        
-        // enable delete inpts row button
-        total_ipnut_rows++;
-        $('[name="delete"]').prop('disabled', false);
+            $('#order-table').append(addRow);
+            
+            // enable delete inpts row button
+            total_ipnut_rows++;
+            $('[name="delete"]').prop('disabled', false);
 
     }
 
