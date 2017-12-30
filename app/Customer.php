@@ -20,6 +20,10 @@ class Customer extends Model
         return $this->hasMany('App\Order');
     }
     
+    public function items(){
+        return $this->hasMany('App\Item');
+    }
+    
     public function invoices(){
         return $this->hasMany('App\Invoice');
     }
