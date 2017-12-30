@@ -91,4 +91,24 @@ class CustomersController extends Controller
     {
         //
     }
+
+    // search for customer using ajax
+    public function findCustomer(){
+
+        $search = $_GET['query'];
+        $customers = Customer::where('co_name', 'LIKE','%'.$search.'%')->get();
+        
+        
+        if(count($customers) == 0){
+            $searchResult = 'now customer found';
+        }else{
+            foreach($customers as $key =>$value){
+                $searchResult[] = $value->co_name;
+            }
+        }
+
+        return $searchResult;
+
+    }
+    
 }

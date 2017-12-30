@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('customers', 'CustomersController');
+Route::resource('orders', 'ordersController');
+
+// jquery function used in orders.create page to search for client name
+Route::get('find-customer', 'CustomersController@findCustomer');
