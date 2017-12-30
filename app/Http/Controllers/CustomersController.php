@@ -43,7 +43,7 @@ class CustomersController extends Controller
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
         $customer->save();
-        return view('customers.index');
+        return redirect()->route('customers.index');
     }
 
     /**

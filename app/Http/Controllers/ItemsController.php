@@ -94,8 +94,8 @@ class ItemsController extends Controller
                 ]);
         }
         
-        Item::insert($items);  
-
+        Item::insert($items);
+        return view('welcome');
     }
 
     /**
