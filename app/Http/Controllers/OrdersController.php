@@ -72,13 +72,11 @@ class OrdersController extends Controller
     public function show($id)
     {
 
+        $prices = Item::where('order_id', $id)->pluck('price')->toArray();
+        $total_prices = array_sum($prices);
 
         $order = Order::find($id);
-
-        $itmes = new Item;
-        $total_price = $itmes->price;
-
-        return view('orders.show', ['order' =>  $order] , ['total_price' => $total_price]);
+        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices]);
 
     }
 

@@ -3,7 +3,7 @@
 
 <!-- page title -->
 @section('title')
-Create New Order
+HOME PAGE
 @endsection('title')
 
 <!-- custome css -->
@@ -14,6 +14,8 @@ Create New Order
 <!--Page Content -->
 @section('content')
 
-This is index page
+    <a href='/customers'>customers</a>
+    <a href='/orders'>orders</a>
+    <a href='/orders/create'>New Order</a>
 
 @endsection('content')

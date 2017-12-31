@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\Customer;
 use App\Order;
-//use Illuminate\Support\Facades\DB;
 use Input;
 
 
@@ -93,62 +92,8 @@ class ItemsController extends Controller
 
         }
 
-        /*$item = new Item([
-            'description'    => $request->input('description'),
-            'paper'          => $request->input('paper'),
-            'size'           => $request->input('size'),
-            'colors'           => $request->input('colors'),
-            'copies'        => $request->input('copies'),
-            'serial'        => $request->input('serial'),
-            'pack'           => $request->input('pack'),
-            'qty'          => $request->input('qty'),
-            'price'          => 10,
-            'cost'          => 10,
-            'order_id'      =>$newOrderNo,
-            'customer_id'    =>$customer_id,
-         ]);
- 
-         $item->save();*/
- 
-
-        /*$description = Input::get('description');
-        $paper = Input::get('paper');
-        $size = Input::get('size');
-        $colors = Input::get('colors');
-        $copies = Input::get('copies');
-        $serial = Input::get('serial');
-        $pack = Input::get('pack');
-        $qty = Input::get('qty');
-        $price = Input::get('price');
-        $cost = Input::get('cost');
         
-        $items = [];
-
-        for ($i = 0; $i < count($description); $i++) {
-
-            array_push($items,
-
-                [
-
-                    'description' => $description[$i],
-                    'paper' =>$paper[$i],
-                    'size' =>$size[$i],
-                    'colors' =>$colors[$i],
-                    'copies' =>$copies[$i],
-                    'serial' =>$serial[$i],
-                    'pack' =>$pack[$i],
-                    'qty' =>$qty[$i],
-                    'price' =>$price[$i],
-                    'cost' =>$cost[$i],
-                    'order_id' =>$newOrderNo,
-                    'customer_id' =>$customer_id,
-                
-                ]);
-
-            Item::insert($items);
-        }*/
-        
-        return view('welcome');
+        return view('index');
     }
 
     /**
