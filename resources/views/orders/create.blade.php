@@ -233,7 +233,7 @@ $(document).on('click', '.control' ,function() {
             '<td><input name="price[]" type="text" class="col-md-12 form-control form-control-lg" autocomplete="off" ></td>' +
             '<td><input name="cost[]" type="text" class="col-md-12 form-control form-control-lg autocomplete="off" "></td> </tr>' );
 
-            $('#order-table').append(addRow);
+            $('form').append(addRow);
             
             // enable delete inpts row button
             total_ipnut_rows++;

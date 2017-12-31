@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Order;
+use App\Customer;
 
 class OrdersController extends Controller
 {
@@ -15,7 +16,10 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('orders.index');
+
+        $orders = Order::with(['customer', 'items'])->get();
+        
+        return view('orders.index', ['orders' =>  $orders]);
     }
 
     /**
@@ -53,7 +57,7 @@ class OrdersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         //
     }
 
@@ -65,7 +69,13 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        /*foreach ($order->items as $item) {
+            $get_item = $item;
+        }*/
+
+        return view('orders.show', ['order' =>  $order]);
+
     }
 
     /**

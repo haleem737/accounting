@@ -53,13 +53,65 @@ class ItemsController extends Controller
         // get customer id
         $customerName = $request->customer_name;
         $customer_record = Customer::where('co_name',$customerName)->first();
-        $customer_id = $customer_record->id;
+        $customer_id = 1;
 
         $order = new Order;
         $order->customer_id = $customer_id;
         $order->save();
 
         $description = Input::get('description');
+        $paper = Input::get('paper');
+        $size = Input::get('size');
+        $colors = Input::get('colors');
+        $copies = Input::get('copies');
+        $serial = Input::get('serial');
+        $pack = Input::get('pack');
+        $qty = Input::get('qty');
+        $price = Input::get('price');
+        $cost = Input::get('cost');
+
+        for ($i = 0; $i < count($description); $i++){
+        
+            $data = array(
+                array(
+                        "description"=>$description[$i],
+                        "paper"=>$paper[$i],
+                        "size"=>$size[$i],
+                        "colors"=>$colors[$i],
+                        "copies"=>$copies[$i],
+                        "serial"=>$serial[$i],
+                        "pack"=>$pack[$i],
+                        "qty"=>$qty[$i],
+                        "price"=>$price[$i],
+                        "cost"=>$cost[$i],
+                        "order_id"=> $newOrderNo,
+                        "customer_id"=> $customer_id,
+                    ),
+            ); 
+            
+                Item::insert($data); // Eloquent
+
+        }
+
+        /*$item = new Item([
+            'description'    => $request->input('description'),
+            'paper'          => $request->input('paper'),
+            'size'           => $request->input('size'),
+            'colors'           => $request->input('colors'),
+            'copies'        => $request->input('copies'),
+            'serial'        => $request->input('serial'),
+            'pack'           => $request->input('pack'),
+            'qty'          => $request->input('qty'),
+            'price'          => 10,
+            'cost'          => 10,
+            'order_id'      =>$newOrderNo,
+            'customer_id'    =>$customer_id,
+         ]);
+ 
+         $item->save();*/
+ 
+
+        /*$description = Input::get('description');
         $paper = Input::get('paper');
         $size = Input::get('size');
         $colors = Input::get('colors');
@@ -92,9 +144,10 @@ class ItemsController extends Controller
                     'customer_id' =>$customer_id,
                 
                 ]);
-        }
+
+            Item::insert($items);
+        }*/
         
-        Item::insert($items);
         return view('welcome');
     }
 
