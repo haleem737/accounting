@@ -53,7 +53,7 @@ class ItemsController extends Controller
         // get customer id
         $customerName = $request->customer_name;
         $customer_record = Customer::where('co_name',$customerName)->first();
-        $customer_id = 1;
+        $customer_id = $customer_record->id;
 
         $order = new Order;
         $order->customer_id = $customer_id;

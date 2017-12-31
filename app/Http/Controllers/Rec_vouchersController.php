@@ -13,7 +13,7 @@ class Rec_vouchersController extends Controller
      */
     public function index()
     {
-        //
+        return view('rec_vouchers.index');
     }
 
     /**

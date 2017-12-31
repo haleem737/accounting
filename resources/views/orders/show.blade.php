@@ -21,5 +21,6 @@ this is order details
     <li calss='list-group-item'>{{ $item->description }}</li>
     <li calss='list-group-item'>{{ $item->paper }}</li>
 @endforeach
+<li calss='list-group-item'>{{ $total_price }}</li>
 
 @endsection('content')

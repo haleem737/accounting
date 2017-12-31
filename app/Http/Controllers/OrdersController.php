@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Order;
 use App\Customer;
+use App\Item;
 
 class OrdersController extends Controller
 {
@@ -20,6 +21,7 @@ class OrdersController extends Controller
         $orders = Order::with(['customer', 'items'])->get();
         
         return view('orders.index', ['orders' =>  $orders]);
+
     }
 
     /**
@@ -69,12 +71,14 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        /*foreach ($order->items as $item) {
-            $get_item = $item;
-        }*/
 
-        return view('orders.show', ['order' =>  $order]);
+
+        $order = Order::find($id);
+
+        $itmes = new Item;
+        $total_price = $itmes->price;
+
+        return view('orders.show', ['order' =>  $order] , ['total_price' => $total_price]);
 
     }
 
