@@ -54,7 +54,7 @@ Create New Order
 
     </tbody>
     </table>
-    <h2 class='text-right'>total: {{ $total_prices }}</h2>
+    <h2 class='text-center'>total: {{ $total_prices }}</h2>
 </div>
 
 @endsection('content')

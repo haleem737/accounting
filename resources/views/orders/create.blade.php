@@ -89,8 +89,8 @@ border-bottom: 5px solid #f1f1f1;
         
             <div class='col-md-7'>
                 <div class="form-group">
-                    <label for="formGroupExampleInput"><h4>customer Name</h4></label>
-                    <input type="text" name="customer_name" id="customer_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
+                    <label for="formGroupExampleInput"><h4>Company Name</h4></label>
+                    <input type="text" name="company_name" id="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
                 </div>
             </div>
 
@@ -179,7 +179,7 @@ border-bottom: 5px solid #f1f1f1;
 $(document).ready(function(){
 
 // using typehahead plugin to search for customer from database
-$('#customer_name').typeahead({
+$('#company_name').typeahead({
     highlight: true,
     source: function(query, result){
         $.ajax({

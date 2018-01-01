@@ -15,15 +15,13 @@ Create New Order
 @section('content')
 
 <div class='container'>
-    <table class="table table-striped">
+    <table class="table table-striped text-center">
         <thead>
             <tr>
                 <th scope="col">No.</th>
                 <th scope="col">Date</th>
                 <th scope="col">Customer</th>
                 <th scope="col">Company</th>
-                <th scope="col">Price</th>
-                <th scope="col">Balance</th>
             </tr>
         </thead>
     <tbody>
@@ -32,7 +30,6 @@ Create New Order
                 <th scope="row">{{ $order->id }}</th>
                 <td>{{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}</td>
                 <td>{{ $order->customer->full_name }}</td>
-                <td>{{ $order->customer->co_name }}</td>
                 <td>{{ $order->customer->co_name }}</td>
             </tr>
         @endforeach

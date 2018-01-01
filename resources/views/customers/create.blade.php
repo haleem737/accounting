@@ -17,10 +17,10 @@ Create New Order
 <!-- new customer form -->
 <main>
     <div class="container">
-        <div class="row">
+        <div class="row" >
             <div class="col-md-4">
                 
-                <div class="form-new-customer">
+                <div class="form-new-customer text-center">
 
                     <div class="form-group">
                         <h4>Add New Customer</h4>

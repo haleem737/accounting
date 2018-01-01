@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Rec_voucher;
+use App\Customer;
+use App\Order;
 
 class Rec_vouchersController extends Controller
 {
@@ -23,7 +25,7 @@ class Rec_vouchersController extends Controller
      */
     public function create()
     {
-        //
+        return view('rec_vouchers.create');
     }
 
     /**
@@ -34,7 +36,20 @@ class Rec_vouchersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $co_name = $request->company_name;
+
+        $customer = Customer::where('co_name' , $co_name)->first();
+
+        $rec_voucher = new Rec_voucher;
+        $rec_voucher->amount = $request->amount;
+        $rec_voucher->being_for = $request->being_for;
+        $rec_voucher->pay_method = $request->pay_method;
+        $rec_voucher->order_id = 1; // $request->order_id;
+        $rec_voucher->customer_id = $customer->id;
+        
+        $rec_voucher->save();
+
     }
 
     /**
