@@ -60,7 +60,7 @@ class Rec_vouchersController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('rec_vouchers.show');
     }
 
     /**

@@ -90,7 +90,7 @@ border-bottom: 5px solid #f1f1f1;
             <div class='col-md-7'>
                 <div class="form-group">
                     <label for="formGroupExampleInput"><h4>Company Name</h4></label>
-                    <input type="text" name="company_name" id="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
+                    <input type="text" value='test test test' name="company_name" id="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
                 </div>
             </div>
 
@@ -121,16 +121,16 @@ border-bottom: 5px solid #f1f1f1;
                         <tr id='table-header' align='center'>
                         
                             <th class='col-md-.1' style='font-weight:normal'>#</th>
-                            <th class='col-md-3' style='font-weight:normal'>Item Description</th>
-                            <th class='col-md-1' style='font-weight:normal'>Paper</th>
-                            <th class='col-md-.7' style='font-weight:normal'>Size</th>
-                            <th class='col-md-.7' style='font-weight:normal'>Colors</th>
-                            <th class='col-md-.5' style='font-weight:normal'>Copies</th>
-                            <th class='col-md-1' style='font-weight:normal'>Serial</th>
-                            <th class='col-md-1' style='font-weight:normal'>Pack</th>
-                            <th class='col-md-1' style='font-weight:normal'>qty</th>
-                            <th class='col-md-1' style='font-weight:normal'>Price</th>
-                            <th class='col-md-1' style='font-weight:normal'>Cost</th>
+                            <th class='col-md-3' style='font-weight:normal'>الوصف</th>
+                            <th class='col-md-1' style='font-weight:normal'>الوق</th>
+                            <th class='col-md-.7' style='font-weight:normal'>المقاس</th>
+                            <th class='col-md-.7' style='font-weight:normal'>اللون</th>
+                            <th class='col-md-.5' style='font-weight:normal'>الصور</th>
+                            <th class='col-md-1' style='font-weight:normal'>الترقيم</th>
+                            <th class='col-md-1' style='font-weight:normal'>التجليد</th>
+                            <th class='col-md-1' style='font-weight:normal'>الكمية</th>
+                            <th class='col-md-1' style='font-weight:normal'>السعر</th>
+                            <th class='col-md-1' style='font-weight:normal'>التكلفة</th>
                         
                         </tr>
                     
@@ -178,6 +178,24 @@ border-bottom: 5px solid #f1f1f1;
 <script>
 $(document).ready(function(){
 
+
+    // $("form").submit(function(event){
+    //     event.preventDefault(function(){
+            
+    //     });
+    // });
+    
+    $final_co_name = $('#company_name').val();
+
+    $("form").submit( function(eventObj) {
+        alert($final_co_name);
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "company_name_final")
+            .attr('value', $final_co_name)
+            .appendTo('form');
+        return false;
+    });
+  
 // using typehahead plugin to search for customer from database
 $('#company_name').typeahead({
     highlight: true,
