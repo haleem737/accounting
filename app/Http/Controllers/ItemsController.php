@@ -50,7 +50,7 @@ class ItemsController extends Controller
         }
 
         // get customer id
-        $customerName = $request->company_name_final;
+        $customerName = $request->copy_company_name;
         $customer_record = Customer::where('co_name',$customerName)->first();
         $customer_id = $customer_record->id;
 
@@ -84,7 +84,7 @@ class ItemsController extends Controller
                         "price"=>$price[$i],
                         "cost"=>$cost[$i],
                         "order_id"=> $newOrderNo,
-                        "customer_id"=> $customer_id,
+                        "customer_id"=> 1,
                     ),
             ); 
             

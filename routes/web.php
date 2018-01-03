@@ -22,3 +22,5 @@ Route::resource('receipt_vouchers', 'rec_vouchersController');
 
 // jquery function used in orders.create page to search for client name
 Route::get('find-customer', 'CustomersController@findCustomer');
+
+Route::post('items-add', 'ItemsController@store');
