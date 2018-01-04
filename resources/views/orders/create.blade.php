@@ -101,25 +101,20 @@ margin-bottom:100px;
 
       <div class='col-md-12'>
           <!-- search customer name -->
-          <div class='col-md-3'>
-              <div class="form-group">
-                  <input type="text" name="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="Company Name" />
-              </div>
-          </div>
       </div>
     
       <div class='col-md-12'>
           <!-- search customer name -->
           <div class='col-md-3'>
 
-            <div class="row-fluid">
-                <select class="selectpicker" data-live-search="true">
-                    @foreach($customers as $customer)
-                        <option data-tokens="ketchup mustard">{{ $customer->co_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-                     
+            <div class="ui sub header">Single</div>
+            <select name="company_name" class="ui fluid search dropdown" autocomplete="off">
+                <option value="">Skills</option>
+                @foreach($customers as $customer)
+                    <option value="{{ $customer->co_name }}">{{ $customer->co_name }}</option>
+                @endforeach
+            </select>
+                                       
           </div>
       </div>
       
@@ -246,15 +241,22 @@ margin-bottom:100px;
 <!-- script -->
 @section('script')
 
+
 <script>
- $(document).ready(function() {
-    
+$(document).ready(function(){
+
+$('.ui.dropdown')
+    .dropdown({
+        forceSelection: false
+    });
+});
+
 //  $('.item-row').hover(function(){
 //      $(this).html('asfsdf');
 //  });
 
  // using typehahead plugin to search for customer from database
-$('[name="company_name"]').typeahead({
+ $('[name="company_name"]').typeahead({
    highlight: true,
    source: function(query, result){
          $.ajax({
@@ -332,13 +334,15 @@ $('[name="po_no"]').bind("keyup change", function(e) {
 })
 
  $('#submit').on('click',function(){
-    $('form').submit();
+     alert(copy_company_name);
+    // $('form').submit();
  });
     
 
 
- });
- </script>
+</script>
+
+
 
 @endsection('script')
 
