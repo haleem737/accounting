@@ -226,9 +226,8 @@ margin-bottom:100px;
 
   </form>
 
+
     <!-- footer -->
-
-
     <div class="fixed-bottom">
     
         <div class='row'>
