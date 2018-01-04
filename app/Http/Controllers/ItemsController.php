@@ -56,6 +56,7 @@ class ItemsController extends Controller
 
         $order = new Order;
         $order->customer_id = $customer_id;
+        $order->po_no = $request->copy_po_no;
         $order->save();
 
         $description = Input::get('description');
@@ -84,13 +85,14 @@ class ItemsController extends Controller
                         "price"=>$price[$i],
                         "cost"=>$cost[$i],
                         "order_id"=> $newOrderNo,
-                        "customer_id"=> 1,
+                        "customer_id"=> $customer_id,
                     ),
             ); 
             
                 Item::insert($data); // Eloquent
 
         }
+
 
         
         return view('index');

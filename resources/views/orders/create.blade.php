@@ -17,14 +17,6 @@ body{
 background:#f1f1f1;
 }
 
-#order_no{
-margin:60px;
-}
-
-#header{
-margin-bottom:30px;
-}
-
 #controls{
 margin-left:50px;
 margin-bottom:10px;
@@ -54,13 +46,40 @@ background:darkgray;
 color:white;
 }
 
-#table-header{
-background:#8e9999;
-color:white;
-line-height:50px;
-font-size:1.2em;
-font-weight: normal;
-border-bottom: 5px solid #f1f1f1;
+#data-table-header{
+margin-bottom:5px;
+}
+
+.table-header{
+background:#FCAF17;
+margin-right:1.3px;
+margin-left:1.3px;
+padding-top:5px;
+padding-bottom:5px;
+border: 1px solid #939598;
+border-radius: 10px;
+}
+
+.table-cell input{
+margin:0;
+border: 1px solid #939598;
+padding:5px 8px;
+border-radius: 10px;
+}
+
+.table-cell input:focus{
+outline: none !important;
+border:1px solid red;
+box-shadow: 0 0 25px #FCAF17;
+}
+
+.table-cell{
+padding:0;
+margin:3px 1.3px;
+}
+
+#submit{
+margin-bottom:100px;
 }
 
 </style>
@@ -74,28 +93,50 @@ border-bottom: 5px solid #f1f1f1;
   <!-- order no -->
   <div class='row' id='order_no'>
       <div class='col-md-12'>
-          <h2 align='center'>JOB ORDER NO <span style='color:red'><b>#{{$newOrderNum}}</b></span></h2>
+          <h3 align='center'>JOB ORDER NO <span style='color:#F37021'><b>#{{$newOrderNum}}</b></span></h3>
       </div>
   </div>
 
   <div class='row' id='header'>
 
-      <div class='col-md-7 offset-1'>
-
+      <div class='col-md-12'>
           <!-- search customer name -->
-          <div class='col-md-7'>
+          <div class='col-md-3'>
               <div class="form-group">
-                  <label for="formGroupExampleInput"><h4>Company Name</h4></label>
-                  <input type="text" name="company_name" id="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="search" />
+                  <input type="text" name="company_name" class="form-control form-control-lg" autocomplete="off" placeholder="Company Name" />
               </div>
           </div>
+      </div>
+    
+      <div class='col-md-12'>
+          <!-- search customer name -->
+          <div class='col-md-3'>
 
+            <div class="row-fluid">
+                <select class="selectpicker" data-live-search="true">
+                    @foreach($customers as $customer)
+                        <option data-tokens="ketchup mustard">{{ $customer->co_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+                     
+          </div>
+      </div>
+      
+      <div class='col-md-12'>
+
+      <!-- Add P.O. Number -->
+        <div class='col-md-3'>
+            <div class="form-group">
+                <input type="text" name="po_no" id="po-no" class="form-control form-control-lg" autocomplete="off" placeholder="P.O. Number" />
+            </div>
+        </div>
       </div>
 
-      <!-- date -->
+      <!-- date
       <div class='col-md-3'>
           <h4>Date: {{$date}}</h4>
-      </div>
+      </div> -->
 
   </div>
 
@@ -105,19 +146,19 @@ border-bottom: 5px solid #f1f1f1;
       <a href='#' name='delete' class="control fa fa-trash fa-lg btn-md"> DEL</a>
   </div>
 
-  <div class='row text-center' style='padding:0 50px'>
+  <div id='data-table-header' class='row text-center' style='margin-right:20px;margin-left:50px'>
 
-      <div class="col-md-1">#</div>
-      <div class="col-md-2">Description</div>
-      <div class="col-md-1">Paper</div>
-      <div class="col-md-1">Size</div>
-      <div class="col-md-1">Color</div>
-      <div class="col-md-1">Copies</div>
-      <div class="col-md-1">Serial</div>
-      <div class="col-md-1">Pack</div>
-      <div class="col-md-1">Qty</div>
-      <div class="col-md-1">Price</div>
-      <div class="col-md-1">Cost</div>
+      <div class="col-auto table-header" style='padding-left:26px; padding-right:26px;'>#</div>
+      <div class="col-md-2 table-header">Description</div>
+      <div class="col-md-1 table-header">Paper</div>
+      <div class="col-md-1 table-header">Size</div>
+      <div class="col-md-1 table-header">Color</div>
+      <div class="col-md-1 table-header">Copies</div>
+      <div class="col-md-1 table-header">Serial</div>
+      <div class="col-md-1 table-header">Pack</div>
+      <div class="col-md-1 table-header">Qty</div>
+      <div class="col-md-1 table-header">Price</div>
+      <div class="col-md-1 table-header">Cost</div>
 
   </div>
 
@@ -125,9 +166,9 @@ border-bottom: 5px solid #f1f1f1;
   <form action='/items' method='POST'>
   {{ csrf_field() }}
 
-    <div id='data-inputs' class='row text-center input-row' style='padding:0 50px'>
+    <div id='data-inputs' class='row text-center input-row' style='margin-right:20px;margin-left:50px'>
 
-          <div class="col-md-1">
+          <div class="col-auto table-cell item-row" style='padding-left:15px; padding-right:0;'>
 
               <label class="custom-control custom-checkbox">
                   <input name="item-row" type="checkbox" class="custom-control-input">
@@ -137,43 +178,43 @@ border-bottom: 5px solid #f1f1f1;
 
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-2 table-cell">
             <input name="description[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="paper[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="size[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="color[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="copies[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="serial[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="pack[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="qty[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="price[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1">
+          <div class="col-md-1 table-cell">
             <input name="cost[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
@@ -181,14 +222,24 @@ border-bottom: 5px solid #f1f1f1;
 
 
     <input type='hidden' name='copy_company_name'>
+    <input type='hidden' name='copy_po_no'>
 
   </form>
 
-  <input id='submit' type='submit' value='APPLY' class='btn btn-success pull-right'>
-  <div class="clearfix"></div>
-
     <!-- footer -->
-    <div class="fixed-bottom">fotter here</div>
+
+
+    <div class="fixed-bottom">
+    
+        <div class='row'>
+            <div class='col-md-12 text-center'>
+                <input id='submit' type='submit' value='APPLY' class='btn btn-success'>
+                <a href='/'>cancel</a>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+    </div>
 
 
 </div>
@@ -199,11 +250,12 @@ border-bottom: 5px solid #f1f1f1;
 <script>
  $(document).ready(function() {
     
- 
-
+//  $('.item-row').hover(function(){
+//      $(this).html('asfsdf');
+//  });
 
  // using typehahead plugin to search for customer from database
-$('#company_name').typeahead({
+$('[name="company_name"]').typeahead({
    highlight: true,
    source: function(query, result){
          $.ajax({
@@ -272,9 +324,12 @@ $('#company_name').typeahead({
      }
  });
 
-$("#company_name").bind("keyup change", function(e) {
+$('[name="company_name"]').bind("keyup change", function(e) {
     $('[name="copy_company_name"]').val($(this).val());
+})
 
+$('[name="po_no"]').bind("keyup change", function(e) {
+    $('[name="copy_po_no"]').val($(this).val());
 })
 
  $('#submit').on('click',function(){

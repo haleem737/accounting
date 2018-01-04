@@ -48,8 +48,11 @@ class OrdersController extends Controller
         $ksaTime = $dateAndTime->addHours(3);
         $date = $ksaTime->format('d-m-Y');
 
+
+        $customers = Customer::select('co_name')->get();
+
         
-        return view('orders.create')->with('date',$date)->with('newOrderNum',$newOrderNoPadded);
+        return view('orders.create')->with('date',$date)->with('newOrderNum',$newOrderNoPadded)->with('customers',$customers);
     }
 
     /**
