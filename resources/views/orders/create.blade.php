@@ -9,9 +9,6 @@ Create New Order
 <!-- custome css -->
 @section('style')
 <style>
-/* add style for dropdown customer search results */
-.active{background:skyblue}
-.dropdown-item:hover{background:skyblue}
 
 body{
 background:#f1f1f1;
@@ -93,34 +90,31 @@ margin-bottom:100px;
   <!-- order no -->
   <div class='row' id='order_no'>
       <div class='col-md-12'>
-          <h3 align='center'>JOB ORDER NO <span style='color:#F37021'><b>#{{$newOrderNum}}</b></span></h3>
+          <h1 align='center'>JOB ORDER NO <span style='color:#F37021'><b>#{{$newOrderNum}}</b></span></h1>
       </div>
   </div>
 
   <div class='row' id='header'>
 
       <div class='col-md-12'>
-          <!-- search customer name -->
-      </div>
-    
-      <div class='col-md-12'>
-          <!-- search customer name -->
-          <div class='col-md-3'>
+      
+          <div class='col-md-3 field'>
 
-            <div class="ui sub header">Single</div>
+            <!-- search for company name -->
+            <!-- <div class="ui header">select</div> -->
             <select name="company_name" class="ui fluid search dropdown" autocomplete="off">
-                <option value="">Skills</option>
+                <option value="">Company Name</option>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->co_name }}">{{ $customer->co_name }}</option>
                 @endforeach
             </select>
-                                       
+              <h2 id="choose_company_error_message" style='color:red;display:none;margin-top:0;padding-top:0'>you have to choose company</h2>                         
           </div>
       </div>
       
       <div class='col-md-12'>
 
-      <!-- Add P.O. Number -->
+      <!-- P.O. Number -->
         <div class='col-md-3'>
             <div class="form-group">
                 <input type="text" name="po_no" id="po-no" class="form-control form-control-lg" autocomplete="off" placeholder="P.O. Number" />
@@ -135,12 +129,13 @@ margin-bottom:100px;
 
   </div>
 
-  <!-- data input table controls -->
+  <!-- data table controls -->
   <div class='text-left' id='controls'>
       <a href='#' name='add-row' class="control fa fa-plus fa-lg btn-md"> ADD</a>
       <a href='#' name='delete' class="control fa fa-trash fa-lg btn-md"> DEL</a>
   </div>
 
+  <!-- data table header -->
   <div id='data-table-header' class='row text-center' style='margin-right:20px;margin-left:50px'>
 
       <div class="col-auto table-header" style='padding-left:26px; padding-right:26px;'>#</div>
@@ -156,9 +151,9 @@ margin-bottom:100px;
       <div class="col-md-1 table-header">Cost</div>
 
   </div>
-
-  <!-- order items form -->
-  <form action='/items' method='POST'>
+<div class="ui form">
+  <!-- data table inputs form -->
+  <form id='form' action='/items' method='POST'>
   {{ csrf_field() }}
 
     <div id='data-inputs' class='row text-center input-row' style='margin-right:20px;margin-left:50px'>
@@ -173,8 +168,8 @@ margin-bottom:100px;
 
           </div>
 
-          <div class="col-md-2 table-cell">
-            <input name="description[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
+          <div class="col-md-2 table-cell field">
+            <input name="description[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" required>
           </div>
 
           <div class="col-md-1 table-cell">
@@ -205,26 +200,25 @@ margin-bottom:100px;
             <input name="qty[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1 table-cell">
-            <input name="price[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
+          <div class="col-md-1 table-cell field">
+            <input name="price[]" type="number" step="any" class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
           <div class="col-md-1 table-cell">
-            <input name="cost[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
+            <input name="cost[]" type="number" step="any" class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
     </div>
 
-
-    <input type='hidden' name='copy_company_name'>
-    <input type='hidden' name='copy_po_no'>
-
+    <input id='hidden_submit' type='submit' style='display:none'>  
+    <input class="field" type='hidden' name='copy_company_name' autocomplete="off">
+    <input type='hidden' name='copy_po_no' autocomplete="off">
   </form>
-
+  </div>
 
     <!-- footer -->
     <div class="fixed-bottom">
-    
+
         <div class='row'>
             <div class='col-md-12 text-center'>
                 <input id='submit' type='submit' value='APPLY' class='btn btn-success'>
@@ -245,35 +239,54 @@ margin-bottom:100px;
 <script>
 $(document).ready(function(){
 
+// form validation
+$( ".ui.form" ).form({
+    inline  : true,
+    fields: {
+        copy_company_name: {
+            inline : true,
+            identifier : "copy_company_name",
+            rules: [{
+                type : "empty",
+                prompt : 'Please enter your first name'
+            }]
+        },
+    },
+    onSuccess: function() {
+        console.log( "success" );
+    }
+});
+
+// fire funtion whine #submit button clicked
+$('#submit').on('click',function(){
+    $('#hidden_submit').trigger('click');
+});
+
+$('form').submit(function(){
+    if($('[name="copy_company_name"]').val() == ""){
+        $('#choose_company_error_message').css('display' , 'block');
+        return false
+    }
+    return true;
+});
+
+// get selected company name from dropdown and copy it to hidden input (copy_company_name to use with the form
 $('.ui.dropdown')
     .dropdown({
+        onChange: function(value){
+            $('[name="copy_company_name"]').val(value);
+            $('#choose_company_error_message').css('display' , 'none');
+        },
         forceSelection: false
     });
 });
 
-//  $('.item-row').hover(function(){
-//      $(this).html('asfsdf');
-//  });
-
- // using typehahead plugin to search for customer from database
- $('[name="company_name"]').typeahead({
-   highlight: true,
-   source: function(query, result){
-         $.ajax({
-            url:"{{ URL::to('find-customer') }}",
-            method:"GET",
-            data:{query:query},
-            dataType:"json",
-            success:function(data){
-                result($.map(data, function(customer){
-                return customer;
-                }));
-            }
-         })
-    }
-});
+// get po number from po_no input value and copy it to hidden input (copy_po_no name to use with the form
+$('[name="po_no"]').bind("keyup change", function(e) {
+    $('[name="copy_po_no"]').val($(this).val());
+})
  
- // input data table functions
+ // table data control functions (add row. delete row)
  // set first inputs row index
  var row_index = 1;
  $('.row-index').each(function( index ) {
@@ -293,7 +306,7 @@ $('.ui.dropdown')
          
          row_index++;
  
-         $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='text']").val("");
+         $("#data-inputs").clone().insertAfter("#data-inputs").find(".clear-input:input[type='text']").val("");
  
          // reset input rows index
          $('.row-index').each(function( index ) {
@@ -310,8 +323,7 @@ $('.ui.dropdown')
  
  
          if($('.row-index').length == 1){
-             return false;
-             $('[name="delete"]').prop('disabled', true);
+             return $('[name="delete"]').prop('disabled', true);
          }
              
          // remove inputs row
@@ -323,22 +335,7 @@ $('.ui.dropdown')
          });
          row_index = $('.row-index').length;
      }
- });
-
-$('[name="company_name"]').bind("keyup change", function(e) {
-    $('[name="copy_company_name"]').val($(this).val());
-})
-
-$('[name="po_no"]').bind("keyup change", function(e) {
-    $('[name="copy_po_no"]').val($(this).val());
-})
-
- $('#submit').on('click',function(){
-     alert(copy_company_name);
-    // $('form').submit();
- });
-    
-
+ });    
 
 </script>
 
