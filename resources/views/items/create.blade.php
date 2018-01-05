@@ -36,11 +36,29 @@
 
 </form>
 
+<div class="ui container">
+    <div class="ui animated button">
+        <span class="visible content">Next</span>
+        <span id='delete' class="hidden content"><i class="trash icon"></i></span>
+    </div>
+</div>
 
+<div class="ui labeled button" tabindex="0">
+  <div class="ui button">
+    <i class="heart icon"></i> Like
+  </div>
+  <a class="ui basic label">
+    2,048
+  </a>
+</div>
 @section('script')
 <script>
 
 $(document).ready(function(){
+
+$('#delete').on('click' , function(){
+    $("<input name='test[]' type='text' required>").appendTo('form');
+});
 
 $('h1').on('click' , function(){
     $("<input name='test[]' type='text' required>").appendTo('form');

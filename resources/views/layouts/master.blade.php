@@ -17,9 +17,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Archivo' rel='stylesheet'>
 
-    <!-- semantic css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
     
+    <!-- semantic icons  -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.css">.
+
+
     <!-- style -->
     <style type='text/css'>
     </style>

@@ -12,35 +12,7 @@ Create New Order
 
 body{
 background:#f1f1f1;
-}
-
-#controls{
-margin-left:50px;
-margin-bottom:10px;
-}
-
-a[name=delete]{
-padding:10px;
-background:lightgray;
-color:black;
-}
-
-a[name=delete]:hover{
-padding:10px;
-background:darkgray;
-color:white;
-}
-
-a[name=add-row]{
-padding:10px;
-background:lightgray;
-color:black;
-}
-
-a[name=add-row]:hover{
-padding:10px;
-background:darkgray;
-color:white;
+margin:0 100px;
 }
 
 #data-table-header{
@@ -98,7 +70,7 @@ margin-bottom:100px;
 
       <div class='col-md-12'>
       
-          <div class='col-md-3 field'>
+          <div class='col-md-3'>
 
             <!-- search for company name -->
             <!-- <div class="ui header">select</div> -->
@@ -129,16 +101,10 @@ margin-bottom:100px;
 
   </div>
 
-  <!-- data table controls -->
-  <div class='text-left' id='controls'>
-      <a href='#' name='add-row' class="control fa fa-plus fa-lg btn-md"> ADD</a>
-      <a href='#' name='delete' class="control fa fa-trash fa-lg btn-md"> DEL</a>
-  </div>
-
   <!-- data table header -->
-  <div id='data-table-header' class='row text-center' style='margin-right:20px;margin-left:50px'>
+  <div id='data-table-header' class='row text-center'>
 
-      <div class="col-auto table-header" style='padding-left:26px; padding-right:26px;'>#</div>
+      <div class="col-auto table-header" style='padding-left:1.5em; padding-right:1.5em;'>#</div>
       <div class="col-md-2 table-header">Description</div>
       <div class="col-md-1 table-header">Paper</div>
       <div class="col-md-1 table-header">Size</div>
@@ -156,15 +122,21 @@ margin-bottom:100px;
   <form id='form' action='/items' method='POST'>
   {{ csrf_field() }}
 
-    <div id='data-inputs' class='row text-center input-row' style='margin-right:20px;margin-left:50px'>
+    <div id='data-inputs' class='row text-center input-row' style=''>
 
-          <div class="col-auto table-cell item-row" style='padding-left:15px; padding-right:0;'>
+          <div class="col-auto table-cell item-row" style='padding-right:0;'>
 
-              <label class="custom-control custom-checkbox">
+              <!-- <label class="custom-control custom-checkbox">
                   <input name="item-row" type="checkbox" class="custom-control-input">
                   <span class="custom-control-indicator"></span>
                   <span class="custom-control-description row-index"></span>
-              </label>
+              </label> -->
+
+            <div class="ui animated button">
+                <span class="visible content row-index"></span>
+                <span class="hidden content delete-my-row"><i class="trash icon"></i></span>
+            </div>
+                    
 
           </div>
 
@@ -204,9 +176,17 @@ margin-bottom:100px;
             <input name="price[]" type="number" step="any" class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
           </div>
 
-          <div class="col-md-1 table-cell">
+            <div class="col-md-1 table-cell">
             <input name="cost[]" type="number" step="any" class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
+          
+
+            <div id='add-new-row' class="ui circular animated green basic button" style='position:absolute;right:-73px;top:0px'>
+                <span class="visible content"><i class="plus icon"></i></span>
+                <span id='delete' class="hidden content"><i class="plus icon"></i></span>
+            </div>
+
           </div>
+
 
     </div>
 
@@ -239,6 +219,32 @@ margin-bottom:100px;
 <script>
 $(document).ready(function(){
 
+// get selected company name from dropdown and copy it to hidden input (copy_company_name to use with the form
+$('.ui.dropdown')
+    .dropdown({
+        onChange: function(value){
+            $('[name="copy_company_name"]').val(value);
+            $('#choose_company_error_message').css('display' , 'none');
+        },
+        forceSelection: false
+    });
+});
+
+// get po number from po_no input value and copy it to hidden input (copy_po_no name to use with the form
+$('[name="po_no"]').bind("keyup change", function(e) {
+    $('[name="copy_po_no"]').val($(this).val());
+})
+
+// check if one option selected from company name dropdown (if not show error message)
+$('form').submit(function(){
+    if($('[name="copy_company_name"]').val() == ""){
+        $('#choose_company_error_message').css('display' , 'block');
+        return false
+    }
+    return true;
+});
+
+
 // form validation
 $( ".ui.form" ).form({
     inline  : true,
@@ -262,80 +268,63 @@ $('#submit').on('click',function(){
     $('#hidden_submit').trigger('click');
 });
 
-$('form').submit(function(){
-    if($('[name="copy_company_name"]').val() == ""){
-        $('#choose_company_error_message').css('display' , 'block');
-        return false
-    }
-    return true;
-});
 
-// get selected company name from dropdown and copy it to hidden input (copy_company_name to use with the form
-$('.ui.dropdown')
-    .dropdown({
-        onChange: function(value){
-            $('[name="copy_company_name"]').val(value);
-            $('#choose_company_error_message').css('display' , 'none');
-        },
-        forceSelection: false
-    });
-});
-
-// get po number from po_no input value and copy it to hidden input (copy_po_no name to use with the form
-$('[name="po_no"]').bind("keyup change", function(e) {
-    $('[name="copy_po_no"]').val($(this).val());
-})
- 
  // table data control functions (add row. delete row)
- // set first inputs row index
+ // set first input row index
  var row_index = 1;
  $('.row-index').each(function( index ) {
      $(this).html(index + 1);
  });
+ 
  // total of input rows
  var total_ipnut_rows = 1;
- // define action var to apply a function when control button clicked
- var action;
- // check the clicked buttion & fire the required function
- $(document).on('click', '.control' ,function() {
- 
-     action = $(this).attr('name');
- 
-     // add row buttion is clicked
-     if(action == 'add-row'){
-         
-         row_index++;
- 
-         $("#data-inputs").clone().insertAfter("#data-inputs").find(".clear-input:input[type='text']").val("");
- 
-         // reset input rows index
-         $('.row-index').each(function( index ) {
-             $(this).html(index + 1);
-         });
- 
-         // enable delete inpts row button
-         total_ipnut_rows++;
-         $('[name="delete"]').prop('disabled', false);
-     }
- 
-     // remove row buttion is clicked
-     if(action == 'delete'){
- 
- 
-         if($('.row-index').length == 1){
-             return $('[name="delete"]').prop('disabled', true);
-         }
-             
-         // remove inputs row
-         $('.input-row').has('input[name="item-row"]:checked').remove();
- 
-         // reset input rows index
-         $('.row-index').each(function( index ) {
-             $(this).html(index + 1);
-         });
-         row_index = $('.row-index').length;
-     }
- });    
+
+
+// add new input row with shortcut crtl + arrwo down
+$(document).keydown(function(e) {
+    
+    if(e.ctrlKey && e.which == 40) {
+        row_index++;
+        $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='text']").val("");
+
+        // reset input rows index
+        $('.row-index').each(function( index ) {
+        $(this).html(index + 1);
+        });
+    }
+
+});
+
+// add new input row when click on #add-new-item
+$('#add-new-row').on('click', function() {
+
+    row_index++;
+    
+    $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='text']").val("");
+
+    // reset input rows index
+    $('.row-index').each(function( index ) {
+        $(this).html(index + 1);
+    });
+
+});
+
+
+// delete input row when click on .delete-my-row
+$(document).on('click', '.delete-my-row', function() {
+    var input_row_index = $(".delete-my-row").index(this);
+
+    // don't remove if there is only one input row
+    if(input_row_index != 0){
+        $('.input-row').eq(input_row_index).remove();
+
+        // reset input rows index
+        $('.row-index').each(function( index ) {
+            $(this).html(index + 1);
+        });       
+    }
+});
+
 
 </script>
 
