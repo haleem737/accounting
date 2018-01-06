@@ -22,6 +22,7 @@ Create New Order
                 <th scope="col">Date</th>
                 <th scope="col">Customer</th>
                 <th scope="col">Company</th>
+                <th scope="col">P.O. No</th>
             </tr>
         </thead>
     <tbody>
@@ -31,6 +32,7 @@ Create New Order
                 <td>{{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}</td>
                 <td>{{ $order->customer->full_name }}</td>
                 <td>{{ $order->customer->co_name }}</td>
+                <td>{{ $order->po_no }}</td>
             </tr>
         @endforeach
     </tbody>

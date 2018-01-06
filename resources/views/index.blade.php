@@ -30,30 +30,4 @@ font-size:50px;
 <a href='/orders/create'>New Order</a>
 <a href='/rec_vouchers/create'>New Recipt voucher</a>
 
-
-<!-- test semanatic ui -->
-<div class="col-md-3">
-    <div class="ui sub header">Single</div>
-    <select name="skills" class="ui fluid search dropdown" autocomplete="off">
-        <option value="">Skills</option>
-        <option value="angular">Angular</option>
-        <option value="angular">Anguldfsar</option>
-        <option value="angular">Angsfular</option>
-    </select>
-</div>
-@section('script')
-
-<script>
-$(document).ready(function(){
-
-$('.ui.dropdown')
-    .dropdown();  
-});
-
-</script>
-
-@endsection('script')
-
-
-
 @endsection('content')
