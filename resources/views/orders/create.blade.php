@@ -246,13 +246,11 @@ margin:3px 1.3px;
 
     <!-- footer -->
     <div class="fixed-bottom">
-
-    <div class="row">
-
-        <div class="col-md-12 text-center" style='background:#393939; height:80px;padding-top:13px'>
+        <div class="row">
+            <div class="col-md-12 text-center" style='background:#393939; height:80px;padding-top:13px'>
             <img src="{{ asset('img/logo.png') }}">
+            </div>
         </div>
-
     </div>
 
 
@@ -270,6 +268,8 @@ margin:3px 1.3px;
 // calculate (total price - total VAT - total price with VAT)
 function calculateTotalPrice() {
     var totalPrice = 0;
+    var totalVat = 0;
+    var totalWithVAT = 0;
     //iterate through each textboxes and add the values
     $('[name="price[]"]').each(function() {
         //add only if the value is number
@@ -426,7 +426,10 @@ $(document).on('click', '.delete-my-row', function() {
         // reset input rows index
         $('.row-index').each(function( index ) {
             $(this).html(index + 1);
-        });       
+        });
+
+        calculateTotalPrice();        
+    
     }
 });
 

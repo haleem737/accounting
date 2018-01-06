@@ -8,65 +8,122 @@ Create New Order
 
 <!-- custome css -->
 @section('style')
+
+<style>
+html, body{
+height: 100%;
+}
+/* body { 
+background-image: url('https://i.imgur.com/WiE0oXP.png') ;
+background-position: center center;
+background-repeat:  no-repeat;
+background-attachment: fixed;
+background-size:  cover;
+background-color: #999;
+
+} */
+
+body{
+background:#f4f4f4;
+}
+
+div, body{
+margin: 0;
+padding: 0;
+font-family: exo, sans-serif;
+
+}
+.wrapper {
+height: 100%; 
+width: 100%; 
+}
+
+.message {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+width: 100%; 
+height:100%;
+bottom: 0; 
+display: block;
+position: absolute;
+background-color: rgba(0,0,0,0.5);
+color: #fff;
+padding: 0.5em;
+}
+
+.input{
+margin-bottom:10px;
+}
+
+
+</style>
+
 @endsection('style')
 
 
 <!--Page Content -->
 @section('content')
 
-<!-- new customer form -->
-<main>
-    <div class="container">
-        <div class="row" >
-            <div class="col-md-4">
-                
-                <div class="form-new-customer text-center">
-
-                    <div class="form-group">
-                        <h4>Add New Customer</h4>
-                    </div>
-
-                    <!-- begining of add customer form -->
-                    <form action='/customers' method='POST'>
-                    {{ csrf_field() }}
-                
-                        <!-- customer full name -->
-                        <div class="form-group">
-                            <input type="text" name='full_name' class="form-control chat-input" placeholder="Full Name" />
-                        </div> 
-
-                        <!-- company name -->
-                        <div class="form-group">
-                            <input type="text" name='co_name' class="form-control chat-input" placeholder="Company Name" />
-                        </div> 
-
-                        <!-- tel -->
-                        <div class="form-group">
-                            <input type="text" name='tel' class="form-control chat-input" placeholder="Tel" />
-                        </div> 
-
-                        <!-- mobile -->
-                        <div class="form-group">
-                            <input type="text" name='mobile' class="form-control chat-input" placeholder="Mobile" />
-                        </div> 
-
-                        <!-- email -->
-                        <div class="form-group">
-                            <input type="text" name='email' class="form-control chat-input" placeholder="Email" />
-                        </div> 
-
-                        <!-- SUBMIT NEW customer -->
-                        <input type='submit' value='APPLY' class='btn btn-success pull-right'>
-                        <div class="clearfix"></div>
-                        
-                    </form>
+<!-- <div class="wrapper">
+  <div class="message">
+  </div>
+</div> -->
 
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-2 ui huge form">
+
+            <form action='/customers' method='POST' style='background:white;padding:50px 0;margin-top:80px;border-radius: 15px;'>
+            {{ csrf_field() }}
+            
+                <div class="input col-md-10 offset-1">
+                    <h1 align='center'>Add New Customer</h1>
                 </div>
 
-            </div>
+                <!-- customer full name -->
+                <div class="input col-md-10 offset-1">
+                    <input type="text" name='full_name' class="massive" placeholder="Full Name" autocomplete="off" />
+                </div>
+
+                <!-- company name -->
+                <div class="input col-md-10 offset-1">
+                    <input type="text" name='co_name' class="massive" placeholder="Company Name" autocomplete="off" />
+                </div>
+
+                <!-- Tel. -->
+                <div class="input col-md-10 offset-1">
+                    <input type="text" name='tel' class="massive" placeholder="Tel" autocomplete="off" />
+                </div>
+
+                <!-- Mobile -->
+                <div class="input col-md-10 offset-1">
+                    <input type="text" name='mobile' class="massive" placeholder="Mobile" autocomplete="off" />
+                </div>
+
+                <!-- E-mail -->
+                <div class="input col-md-10 offset-1" style='margin-bottom:40px'>
+                    <input type="text" name='email' class="massive" placeholder="E-mail" autocomplete="off" />
+                </div>
+
+                <div class="input col-md-10 offset-1" align='center'>
+                    <button id='submit' type='submit' class="ui massive olive button">Save</button>
+                </div>
+
+            </form>
+
         </div>
     </div>
-</main>
+</div>
+
+<div class="fixed-bottom">
+    <div class="row">
+        <div class="col-md-12 text-center" style='background:#393939; height:80px;padding-top:13px'>
+            <img src="{{ asset('img/logo.png') }}">
+        </div>
+    </div>
+</div>
+
 
 @endsection('content')

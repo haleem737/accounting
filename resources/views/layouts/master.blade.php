@@ -34,8 +34,11 @@
 <body>
 
     <div id="app">
+    
+        @include('partials.errors')
+        @include('partials.success')
 
-            @yield('content')
+        @yield('content')
         
     </div>
 
