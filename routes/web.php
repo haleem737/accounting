@@ -15,12 +15,22 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::resource('customers', 'CustomersController');
-Route::resource('orders', 'ordersController');
-Route::resource('items', 'itemsController');
-Route::resource('receipt_vouchers', 'rec_vouchersController');
+Auth::routes();
 
-// jquery function used in orders.create page to search for client name
-Route::get('find-customer', 'CustomersController@findCustomer');
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('items-add', 'ItemsController@store');
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('customers', 'CustomersController');
+    Route::resource('orders', 'ordersController');
+    Route::resource('items', 'itemsController');
+    Route::resource('receipt_vouchers', 'rec_vouchersController');
+
+    // jquery function used in orders.create page to search for client name
+    Route::get('find-customer', 'CustomersController@findCustomer');
+
+    Route::post('items-add', 'ItemsController@store');
+    // Auth::routes();
+
+});

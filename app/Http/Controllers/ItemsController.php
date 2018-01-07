@@ -94,8 +94,11 @@ class ItemsController extends Controller
         }
 
 
+        return redirect()->route('home')->with('success' , 'Company created successfully');
+
+
         
-        return view('index');
+        // return view('index');
     }
 
     /**

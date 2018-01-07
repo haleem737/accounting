@@ -1,10 +1,11 @@
 <!-- extend master layout -->
 @extends('layouts.master')
-
 <!-- page title -->
 @section('title')
 HOME PAGE
 @endsection('title')
+
+
 <style>
 
 a{
@@ -29,21 +30,34 @@ font-size:50px;
 }
 
 
+
+
 </style>
 
-
-@section('style')
-@endsection('style')
-
-
-<!--Page Content -->
 @section('content')
 
-<!-- <a href='/customers'>customers</a>
-<a href='/customers/create'>New Customer</a>
-<a href='/orders'>orders</a>
-<a href='/orders/create'>New Order</a> -->
-<!-- <a href='/rec_vouchers/create'>New Recipt voucher</a> -->
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container">
 
     <div class="row">
@@ -76,7 +90,7 @@ font-size:50px;
                     <div class="card-header">
                         <h2>VIEW ORDERS</h2>
                     </div>
-                    <a href='/orders'><p class="card-text"><i class=" large Calendar icon"></i></p></a>
+                    <a href='/orders'><p class="icon-link card-text"><i class=" large Calendar icon"></i></p></a>
                 </div>
             </div>
             
@@ -96,6 +110,11 @@ font-size:50px;
         </div>
     </div>
 </div>
+
+
+@include('partials.sidebar')
+
+
 
 
 @endsection('content')

@@ -84,27 +84,27 @@ margin-bottom:10px;
 
                 <!-- customer full name -->
                 <div class="input col-md-10 offset-1">
-                    <input type="text" name='full_name' class="massive" placeholder="Full Name" autocomplete="off" />
+                    <input type="text" name='full_name' class="massive" placeholder="Full Name" autocomplete="off" required/>
                 </div>
 
                 <!-- company name -->
                 <div class="input col-md-10 offset-1">
-                    <input type="text" name='co_name' class="massive" placeholder="Company Name" autocomplete="off" />
+                    <input type="text" name='co_name' class="massive" placeholder="Company Name" autocomplete="off" required/>
                 </div>
 
                 <!-- Tel. -->
                 <div class="input col-md-10 offset-1">
-                    <input type="text" name='tel' class="massive" placeholder="Tel" autocomplete="off" />
+                    <input type="text" name='tel' class="massive" placeholder="Tel" autocomplete="off" required/>
                 </div>
 
                 <!-- Mobile -->
                 <div class="input col-md-10 offset-1">
-                    <input type="text" name='mobile' class="massive" placeholder="Mobile" autocomplete="off" />
+                    <input type="text" name='mobile' class="massive" placeholder="Mobile" autocomplete="off" required/>
                 </div>
 
                 <!-- E-mail -->
                 <div class="input col-md-10 offset-1" style='margin-bottom:40px'>
-                    <input type="text" name='email' class="massive" placeholder="E-mail" autocomplete="off" />
+                    <input type="text" name='email' class="massive" placeholder="E-mail" autocomplete="off" required/>
                 </div>
 
                 <div class="input col-md-10 offset-1" align='center'>
@@ -125,5 +125,6 @@ margin-bottom:10px;
     </div>
 </div>
 
+@include('partials.sidebar')
 
 @endsection('content')

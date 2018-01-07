@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Order;
 use App\Customer;
@@ -18,9 +19,15 @@ class OrdersController extends Controller
     public function index()
     {
 
-        $orders = Order::with(['customer', 'items'])->get();
-        
-        return view('orders.index', ['orders' =>  $orders]);
+        if( Auth::check() ){
+
+
+            $orders = Order::with(['customer', 'items'])->get();
+            return view('orders.index', ['orders' =>  $orders]);
+    
+        }
+
+        return view('auth.login');
 
     }
 
