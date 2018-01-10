@@ -9,15 +9,12 @@ Create New Order
 <!-- custome css -->
 @section('style')
 <style>
-
 body{
 margin:0 100px;
 }
-
 #data-table-header{
 margin-bottom:5px;
 }
-
 .table-header{
 background:#FCAF17;
 margin-right:1.3px;
@@ -27,25 +24,21 @@ padding-bottom:5px;
 border: 1px solid #939598;
 border-radius: 10px;
 }
-
 .table-cell input{
 margin:0;
 border: 1px solid #939598;
 padding:5px 8px;
 border-radius: 10px;
 }
-
 .table-cell input:focus{
 outline: none !important;
 border:1px solid red;
 box-shadow: 0 0 25px #FCAF17;
 }
-
 .table-cell{
 padding:0;
 margin:3px 1.3px;
 }
-
 </style>
 @endsection('style')
 
@@ -158,7 +151,7 @@ margin:3px 1.3px;
             </div>
 
             <div class="col-md-1 table-cell">
-                <input name="color[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
+                <input name="colors[]" type='text' class='col-md-12 form-control form-control-lg clear-input' autocomplete="off" >
             </div>
 
             <div class="col-md-1 table-cell">
@@ -264,7 +257,6 @@ margin:3px 1.3px;
 
 
 <script>
-
 // calculate (total price - total VAT - total price with VAT)
 function calculateTotalPrice() {
     var totalPrice = 0;
@@ -284,7 +276,6 @@ function calculateTotalPrice() {
     $("#totalVAT").html(totalVat.toFixed(2));
     $("#totalWithVAT").html(totalWithVAT.toFixed(2));
 }
-
 // calculate total cost
 function calculateTotalCost() {
     var totalCost = 0;
@@ -298,32 +289,28 @@ function calculateTotalCost() {
     //.toFixed() method will roundoff the final totalCost to 2 decimal places
     $("#totalCost").html(totalCost.toFixed(2));
 }
-
-
 $(document).ready(function(){
+
+// disable back for this page after creating the order
+window.history.forward(1);
+
 
 // use calculateTotalPrice function to calculate (total price - total VAT - total price with VAT)
 $(document).on(' keyup change', '[name="price[]"]', function(){
-
     $('[name="price[]"]').each(function() {
         $(this).keyup(function(){
             calculateTotalPrice();
         });
     });
-
 });
-
 // use calculateTotalCost function to calculate total cost
 $(document).on(' keyup', '[name="cost[]"]', function(){
-
     $('[name="cost[]"]').each(function() {
         $(this).keyup(function(){
             calculateTotalCost();
         });
     });
-
 });
-
 // get selected company name from dropdown and copy it to hidden input (copy_company_name to use with the form
 $('.ui.dropdown')
     .dropdown({
@@ -334,12 +321,10 @@ $('.ui.dropdown')
         forceSelection: false
     });
 });
-
 // get po number from po_no input value and copy it to hidden input (copy_po_no name to use with the form
 $('[name="po_no"]').bind("keyup change", function(e) {
     $('[name="copy_po_no"]').val($(this).val());
 })
-
 // check if one option selected from company name dropdown (if not show error message)
 $('form').submit(function(){
     if($('[name="copy_company_name"]').val() == ""){
@@ -348,8 +333,6 @@ $('form').submit(function(){
     }
     return true;
 });
-
-
 // form validation
 $( ".ui.form" ).form({
     inline  : true,
@@ -367,13 +350,10 @@ $( ".ui.form" ).form({
         console.log( "success" );
     }
 });
-
 // fire funtion whine #submit button clicked
 $('#submit').on('click',function(){
     $('#hidden_submit').trigger('click');
 });
-
-
  // table data control functions (add row. delete row)
  // set first input row index
  var row_index = 1;
@@ -383,57 +363,42 @@ $('#submit').on('click',function(){
  
  // total of input rows
  var total_ipnut_rows = 1;
-
-
 // add new input row with shortcut crtl + arrwo down
 $(document).keydown(function(e) {
     
     if(e.ctrlKey && e.which == 40) {
         row_index++;
         $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='number'] , .clear-input:input[type='text']").val("");
-
-        // reset input rows index
-        $('.row-index').each(function( index ) {
-        $(this).html(index + 1);
-        });
-    }
-
-});
-
-// add new input row when click on #add-new-item
-$('#add-new-row').on('click', function() {
-
-    row_index++;
-    
-    $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='number'] , .clear-input:input[type='text']").val("");
-
-    // reset input rows index
-    $('.row-index').each(function( index ) {
-        $(this).html(index + 1);
-    });
-
-});
-
-
-// delete input row when click on .delete-my-row
-$(document).on('click', '.delete-my-row', function() {
-    var input_row_index = $(".delete-my-row").index(this);
-
-    // don't remove if there is only one input row
-    if($('.input-row').length != 1){
-        $('.input-row').eq(input_row_index).remove();
-
         // reset input rows index
         $('.row-index').each(function( index ) {
             $(this).html(index + 1);
         });
-
+    }
+});
+// add new input row when click on #add-new-item
+$('#add-new-row').on('click', function() {
+    row_index++;
+    
+    $("#data-inputs").clone().appendTo("form").find(".clear-input:input[type='number'] , .clear-input:input[type='text']").val("");
+    // reset input rows index
+    $('.row-index').each(function( index ) {
+        $(this).html(index + 1);
+    });
+});
+// delete input row when click on .delete-my-row
+$(document).on('click', '.delete-my-row', function() {
+    var input_row_index = $(".delete-my-row").index(this);
+    // don't remove if there is only one input row
+    if($('.input-row').length != 1){
+        $('.input-row').eq(input_row_index).remove();
+        // reset input rows index
+        $('.row-index').each(function( index ) {
+            $(this).html(index + 1);
+        });
         calculateTotalPrice();        
     
     }
 });
-
-
 </script>
 
 

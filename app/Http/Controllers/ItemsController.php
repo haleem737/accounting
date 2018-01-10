@@ -94,7 +94,7 @@ class ItemsController extends Controller
         }
 
 
-        return redirect()->route('home')->with('success' , 'Company created successfully');
+        return redirect()->route('orders.show', $newOrderNo)->with('success' , 'Order created successfully');
 
 
         
@@ -109,7 +109,8 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Item::where('id', $id)->first();
+        return view('items.show', ['item' => $item]);
     }
 
     /**
@@ -131,8 +132,38 @@ class ItemsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        // $id = $request->input('order_no');
+        // $orderUpdate = Item::where('order_id', '=', 1)->update([
+        //     'paper'=>'cartoon paper'
+        // ]);
+
+
+        $itemUpdate = Item::where('id', $id)
+            ->update([
+                'description'=> $request->input('description'),
+                'paper'=> $request->input('paper'),
+                'size'=> $request->input('size'),
+                'colors'=> $request->input('colors'),
+                'copies'=> $request->input('copies'),
+                'serial'=> $request->input('serial'),
+                'pack'=> $request->input('pack'),
+                'qty'=> $request->input('qty'),
+                'price'=> $request->input('price'),
+                'cost'=> $request->input('cost')
+        ]);
+
+        if($itemUpdate){
+            return redirect()->route('orders.show', $request->input('order_no'))->with('success' , 'Order updated successfully');
+        }
+        //redirect
+        return back()->withInput();
+
+
+
+
+
+        
     }
 
     /**

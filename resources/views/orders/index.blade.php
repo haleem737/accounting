@@ -51,4 +51,8 @@ $(document).ready(function(){
 
 @endsection('script')
 
+
+@include('partials.sidebar')
+
+
 @endsection('content')

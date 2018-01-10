@@ -64,6 +64,7 @@
 @else
 <!-- {{ Auth::user()->name }} <span class="caret"></span> -->
 <a class="" href="{{ url('/home') }}">HOME</a>
+<a class="" href="{{ url('/orders') }}">ORDERS</a>
 <a href="{{ route('logout') }}"
 onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
@@ -94,17 +95,3 @@ Logout
 </div>
 </div>
 </div>
-
-@section('script')
-
-<script>
-function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-}
-</script>
-
-@endsection('script')
