@@ -50,6 +50,14 @@ Create New Order
             <th scope="col">{{ $item->price }}</th>
             <th scope="col">{{ $item->cost }}</th>
             <th scope="col"><a class="edit" id='{{$item->id}}' href="#">Edit</a></th>
+            <th scope="col">
+                <form action="{{ '/items/'.$item->id }}?order_no={{ $order->id }}" method='post'>
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                    <input type="hidden" name="order_no" value="{{ $item->order_id }}">
+                    <button type='submit' style='border:none'><i class='fa fa-trash-o' aria-hidden='true'></i></button>
+                </form>
+            </th>
         </tr>   
 
 @endforeach
@@ -85,7 +93,7 @@ $( ".edit" ).each(function(index) {
             onShow: function(callback) {
                     callback = $.isFunction(callback) ? callback : function(){};
                     var $content = $(this).find('.content');
-                    $.get("/items/" + e.target.id + "?order_no={{ $order->id }}", function(data) {
+                    $.get("/items/" + e.target.id + "/edit?order_no={{ $order->id }}", function(data) {
                     $content.html(data);
                 });
             },

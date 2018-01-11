@@ -19,7 +19,6 @@ class OrdersController extends Controller
     {
 
 
-
         $orders = Order::with(['customer', 'items'])->get();
         return view('orders.index', ['orders' =>  $orders]);
     
@@ -99,7 +98,7 @@ class OrdersController extends Controller
 
         
         $order = Order::find($id);
-        return view('orders.edit', ['order' =>  $order])->with('customers',$customers);;
+        return view('orders.edit', ['order' =>  $order])->with('customers',$customers);
 
     }
 

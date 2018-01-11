@@ -109,8 +109,6 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        $item = Item::where('id', $id)->first();
-        return view('items.show', ['item' => $item]);
     }
 
     /**
@@ -121,7 +119,8 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Item::where('id', $id)->first();
+        return view('items.edit', ['item' => $item]);
     }
 
     /**
@@ -158,12 +157,6 @@ class ItemsController extends Controller
         }
         //redirect
         return back()->withInput();
-
-
-
-
-
-        
     }
 
     /**
@@ -172,8 +165,17 @@ class ItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $item = Item::find($id);
+        $item->delete();
+
+        $order_no = $request->input('order_no');
+        $order = Order::where('id', $order_no)->first();
+
+        $prices = Item::where('order_id', $order_no)->pluck('price')->toArray();
+        $total_prices = array_sum($prices);
+        
+        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('success' , 'Item Deleted successfully');;
     }
 }
