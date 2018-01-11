@@ -43,7 +43,7 @@ class CustomersController extends Controller
         $customer->mobile = $request->mobile;
         $customer->email = $request->email;
         $customer->save();
-        return redirect()->route('customers.index');
+        return redirect()->route('home')->with('success' , 'Customer ' . $request->input('full_name') . ' added successfully');
     }
 
     /**

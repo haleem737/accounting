@@ -8,6 +8,11 @@ Create New Order
 
 <!-- custome css -->
 @section('style')
+<style>
+i:hover{
+color:#00a1d6;
+}
+</style>
 @endsection('style')
 
 
@@ -30,6 +35,7 @@ Create New Order
             <th scope="col">Pack</th>
             <th scope="col">Qty</th>
             <th scope="col">Price</th>
+            <th scope="col">VAT 5%</th>
             <th scope="col">Cost</th>
         </tr>
     </thead>
@@ -48,9 +54,12 @@ Create New Order
             <th scope="col">{{ $item->pack }}</th>
             <th scope="col">{{ $item->qty }}</th>
             <th scope="col">{{ $item->price }}</th>
+            <th scope="col">{{ $item->price * .05 }}</th>
             <th scope="col">{{ $item->cost }}</th>
-            <th scope="col"><a class="edit" id='{{$item->id}}' href="#">Edit</a></th>
+            <!-- edit item -->
+            <th scope="col"><i style='cursor: pointer;' type='submit' class='edit Edit icon' id='{{$item->id}}' aria-hidden='true'></i></th>
             <th scope="col">
+                <!-- delte item -->
                 <form action="{{ '/items/'.$item->id }}?order_no={{ $order->id }}" method='post'>
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
@@ -62,11 +71,31 @@ Create New Order
 
 @endforeach
 
+
+        <tr style='background:#bfe3e3;'>
+            <th scope="row"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Total:</th>
+            <th scope="col">{{ $total_prices }}</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>   
+
+
     </tbody>
     </table>
-    <h2 class='text-center'>total: {{ $total_prices }}</h2>
 
 </div>
+
+<h1 class='add_item'>Add Item</h1>
 
 <div class="ui popup" data-id="123"></div>
 <div class="ui modal" data-id="567">
@@ -85,6 +114,7 @@ Create New Order
 $(document).ready(function(){
 
 
+// edit item
 $( ".edit" ).each(function(index) {
     $(this).on("click", function(e){$('.ui.modal').modal({
 
@@ -107,8 +137,29 @@ $( ".edit" ).each(function(index) {
     });
 });
 
-// });
 
+// add new item to order
+$( ".add_item" ).each(function(index) {
+    $(this).on("click", function(e){$('.ui.modal').modal({
+
+// $('body').on('click', '.edit', function(e){$('.ui.modal').modal({
+
+            onShow: function(callback) {
+                    callback = $.isFunction(callback) ? callback : function(){};
+                    var $content = $(this).find('.content');
+                    $.get("/items/create?order_no={{ $order->id }}", function(data) {
+                    $content.html(data);
+                });
+            },
+
+            onHidden: function(){
+                location.reload();
+            }
+
+        }).modal('show')
+
+    });
+});
 
 
 

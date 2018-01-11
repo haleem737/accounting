@@ -28,7 +28,8 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        return view('items.create');
+        $order_no = Input::get('order_no');
+        return view('items.create')->with('order_no',$order_no);
     }
 
     /**
