@@ -165,8 +165,11 @@ class ItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    // delte item from order function
     public function destroy(Request $request, $id)
     {
+
         $item = Item::find($id);
         $item->delete();
 
@@ -175,7 +178,12 @@ class ItemsController extends Controller
 
         $prices = Item::where('order_id', $order_no)->pluck('price')->toArray();
         $total_prices = array_sum($prices);
+
+        return redirect()->route( 'orders.show', ['id' =>  $order_no] )
+            ->with( 'order', $order )
+            ->with( 'total_prices', $total_prices )
+            ->with( 'success', 'Item Deleted successfully' );
         
-        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('success' , 'Item Deleted successfully');;
+        // return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('success' , 'Item Deleted successfully');;
     }
 }
