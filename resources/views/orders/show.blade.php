@@ -10,6 +10,7 @@ Create New Order
 @section('style')
 <style>
 
+
 body{
 padding-top:50px;
 margin:0 6%;
@@ -80,7 +81,7 @@ vertical-align:bottom;
                 <th scope="col">Pack</th>
                 <th scope="col">Qty</th>
                 <th scope="col">Cost</th>
-                <th scope="col">Price</th>
+                <th style='background:#f2f2f2' scope="col">Price</th>
                 <th scope="col">VAT 5%</th>
                 <th scope="col" colspan="2">
                     <div class="ui small primary icon button add_item">
@@ -104,8 +105,8 @@ vertical-align:bottom;
                 <td style='vertical-align:middle' scope="col">{{ $item->pack }}</td>
                 <td style='vertical-align:middle' scope="col">{{ $item->qty }}</td>
                 <td style='vertical-align:middle' scope="col">{{ $item->cost }}</td>
-                <td style='vertical-align:middle' scope="col">{{ $item->price }}</td>
-                <td style='vertical-align:middle' scope="col">{{ $item->price * .05 }}</td>
+                <td style='vertical-align:middle;background:#f2f2f2' scope="col">{{ $item->price }}</td>
+                <td style='vertical-align:middle' scope="col">{{ number_format((float)$item->price * .05, 2, '.', '') }}</td>
                 <!-- edit item -->
                 <td id='{{$item->id}}' class='edit' style='width:50px;cursor: pointer;' scope="col">
                     <button id='{{$item->id}}' style='background:none;width:0' type='submit' class="ui button">
@@ -130,15 +131,19 @@ vertical-align:bottom;
 
     @endforeach
 
-        <tfoot calass='ui olive table'>
-            <tr style='background:#bfe3e3;'>
-                <th scope="col"  colspan="9"></th>
-                <th scope="col" style='background:#e8e8e8'></th>
-                <th scope="col" style='background:#e8e8e8'><strong>{{ $total_prices }}</strong></th>
-                <th scope="col" style='background:#e8e8e8'></th>
-                <th scope="col" colspan="2" style='background:#e8e8e8'></th>
+        <tfoot>
+            <tr style=''>
+                <th style='border-top:2px solid #adadad' scope="col"  colspan="8"></th>
+                <th scope="col" style='background:#f2f2f2;border-top:2px solid #adadad'><strong>TOTAL:</strong></th>
+                <th data-tooltip="Total Cost" data-inverted="" scope="col" style='background:#dae2e8;border-top:2px solid #adadad'><strong >{{ number_format((float)$total_costs, 2, '.', '') }}</strong></th>
+                <th data-tooltip="Total Price" data-inverted="" scope="col" style='background:#dae2e8;border-top:2px solid #adadad'><strong>{{ number_format((float)$total_prices, 2, '.', '') }}</strong></th>
+                <th data-tooltip="Total VAT" data-inverted="" scope="col" style='background:#dae2e8;border-top:2px solid #adadad'><strong>{{ number_format((float)$total_VAT, 2, '.', '') }}</strong></th>
+                <th data-tooltip="Total Price with VAT" data-inverted="" scope="col" colspan="2" style='background:#dae2e8;border-top:2px solid #adadad'><strong>{{ number_format((float)$total_with_VAT, 2, '.', '') }}</strong></th>
             </tr>
         </tfoot>
+
+
+
         </table>
 
     </div>

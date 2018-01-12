@@ -83,7 +83,20 @@ class OrdersController extends Controller
         $prices = Item::where('order_id', $id)->pluck('price')->toArray();
         $total_prices = array_sum($prices);
 
-        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('customer',$customer);
+        $costs = Item::where('order_id', $id)->pluck('cost')->toArray();
+        $total_costs = array_sum($costs);
+
+        $total_VAT = $total_prices * .05;
+
+        $total_with_VAT = $total_prices + $total_VAT;
+
+        return view('orders.show',
+            ['order' =>  $order],
+            ['total_prices' => $total_prices])
+            ->with('customer',$customer)
+            ->with('total_costs',$total_costs)
+            ->with('total_VAT',$total_VAT)
+            ->with('total_with_VAT',$total_with_VAT);
 
     }
 
