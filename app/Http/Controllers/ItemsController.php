@@ -216,7 +216,7 @@ class ItemsController extends Controller
         return redirect()->route( 'orders.show', ['id' =>  $order_no] )
             ->with( 'order', $order )
             ->with( 'total_prices', $total_prices )
-            ->with( 'success', 'Item added successfully asdfsda fasdf sdaf sadf sdf sdf' );
+            ->with( 'success', 'New item added successfully' );
 
         
 

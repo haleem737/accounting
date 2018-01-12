@@ -77,11 +77,13 @@ class OrdersController extends Controller
     public function show($id)
     {
 
+        $order = Order::find($id);
+        $customer = Customer::where('id',$order->customer_id)->first();
+        
         $prices = Item::where('order_id', $id)->pluck('price')->toArray();
         $total_prices = array_sum($prices);
 
-        $order = Order::find($id);
-        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices]);
+        return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('customer',$customer);
 
     }
 
