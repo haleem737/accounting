@@ -16,16 +16,14 @@ Create New Order
 
 <div class='container'>
 
-    <form method="post" action="{{ route('items.update',[$item->id]) }}">
+    <form method="post" action="{{ '/item-add' }}">
         {{ csrf_field() }}
 
-        <input type="hidden" name="_method" value="put">
-        <input type="hidden" name="order_no">
-
+        <input type="hidden" name="order_no" value="{{$order_no}}">
 
         <div class="form-group">
             <label for="description">Description</label>
-            <input name='description' type="text" class="form-control">
+            <input name='description' type="text" class="form-control" required>
         </div>
 
         <div class="form-row">

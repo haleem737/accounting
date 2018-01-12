@@ -15,7 +15,7 @@ Create New Order
 @section('content')
 
 <div class='container'>
-    <table class="table table-striped text-center">
+    <table class="ui selectable celled table text-center">
         <thead>
             <tr>
                 <th scope="col">No.</th>
@@ -27,8 +27,8 @@ Create New Order
         </thead>
     <tbody>
         @foreach($orders as $order)
-            <tr class='clickable-row' data-href='/orders/{{ $order->id }}'>
-                <th scope="row">{{ $order->id }}</th>
+            <tr class='clickable-row' style='cursor: pointer;' data-href='/orders/{{ $order->id }}'>
+                <th scope="row">#{{ sprintf("%04d", $order->id) }}</th>
                 <td>{{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}</td>
                 <td>{{ $order->customer->full_name }}</td>
                 <td>{{ $order->customer->co_name }}</td>

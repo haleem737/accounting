@@ -65,9 +65,16 @@ function closeNav() {
 }
 </script>
 
+<script>
+$('#message').delay(2250).fadeOut("slow");
+var moveToLeft = 50 - (($("#message").width()) / ($('#message').parent().width()) * 100) / 2;
+$('#message').css('left' , moveToLeft + '%');
+</script>
+
 
 
 @yield('script')
+@include('layouts.footer')
 
 </body>
 </html>

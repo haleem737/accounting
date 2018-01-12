@@ -30,7 +30,9 @@ Route::middleware(['auth'])->group(function () {
     // jquery function used in orders.create page to search for client name
     Route::get('find-customer', 'CustomersController@findCustomer');
 
-    Route::post('items-add', 'ItemsController@store');
+    Route::post('item-add', 'ItemsController@addItem');
+
+
     // Auth::routes();
 
 });

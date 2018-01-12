@@ -187,4 +187,40 @@ class ItemsController extends Controller
         
         // return view('orders.show', ['order' =>  $order] , ['total_prices' => $total_prices])->with('success' , 'Item Deleted successfully');;
     }
+
+    public function addItem(Request $request){
+        
+        $order_no = $request->input('order_no');
+        $order = Order::where('id',$order_no)->first();
+
+        $item = new Item;
+
+        $item->order_id = $request->input('order_no');;
+        $item->customer_id = $order->customer_id;
+        $item->description = $request->input('description');
+        $item->paper = $request->input('paper');
+        $item->size = $request->input('size');
+        $item->colors = $request->input('colors');
+        $item->copies = $request->input('copies');
+        $item->serial = $request->input('serial');
+        $item->pack = $request->input('pack');
+        $item->qty = $request->input('qty');
+        $item->price = $request->input('price');
+        $item->cost = $request->input('cost');
+
+        $item->save();
+
+        $prices = Item::where('order_id', $order_no)->pluck('price')->toArray();
+        $total_prices = array_sum($prices);
+
+        return redirect()->route( 'orders.show', ['id' =>  $order_no] )
+            ->with( 'order', $order )
+            ->with( 'total_prices', $total_prices )
+            ->with( 'success', 'Item added successfully asdfsda fasdf sdaf sadf sdf sdf' );
+
+        
+
+    }
+
+
 }

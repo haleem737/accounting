@@ -20,4 +20,5 @@ Create New Order
 <li>{{ $customer->mobile }}</li>
 <li>{{ $customer->email }}</li>
 
+
 @endsection('content')

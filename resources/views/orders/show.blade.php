@@ -9,9 +9,20 @@ Create New Order
 <!-- custome css -->
 @section('style')
 <style>
+
+body{
+padding-top:50px;
+margin:0 6%;
+}
+
 i:hover{
 color:#00a1d6;
 }
+
+.td-cell{
+vertical-align:bottom;
+}
+
 </style>
 @endsection('style')
 
@@ -20,9 +31,11 @@ color:#00a1d6;
 
 @section('content')
 
-<div class='container'>
-<h1 class='text-center'>order no. {{ $order->id }}</h1>
-    <table class="table table-striped">
+<div id='wrap' style='max-width:1300px' class='container-fluid'>
+    <h2 align='center'>ORDER NO
+        <span style='color:#F37021'><b>#{{sprintf("%04d", $order->id)}}</b></span>
+    </h2>
+    <table class="ui selectable celled table text-center">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -34,9 +47,14 @@ color:#00a1d6;
             <th scope="col">Serial</th>
             <th scope="col">Pack</th>
             <th scope="col">Qty</th>
+            <th scope="col">Cost</th>
             <th scope="col">Price</th>
             <th scope="col">VAT 5%</th>
-            <th scope="col">Cost</th>
+            <th scope="col" colspan="2">
+                <div class="ui small primary icon button add_item">
+                    <i class="plus icon"></i> Add Item
+                </div>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -44,58 +62,54 @@ color:#00a1d6;
 @foreach($order->items as $item)
 
         <tr>
-            <th scope="row">1</th>
-            <th scope="col">{{ $item->description }}</th>
-            <th scope="col">{{ $item->paper }}</th>
-            <th scope="col">{{ $item->size }}</th>
-            <th scope="col">{{ $item->colors }}</th>
-            <th scope="col">{{ $item->copies }}</th>
-            <th scope="col">{{ $item->serial }}</th>
-            <th scope="col">{{ $item->pack }}</th>
-            <th scope="col">{{ $item->qty }}</th>
-            <th scope="col">{{ $item->price }}</th>
-            <th scope="col">{{ $item->price * .05 }}</th>
-            <th scope="col">{{ $item->cost }}</th>
+            <td style='vertical-align:middle' scope="row">1</td>
+            <td style='min-width:20%;vertical-align:middle' scope="col">{{ $item->description }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->paper }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->size }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->colors }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->copies }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->serial }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->pack }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->qty }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->cost }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->price }}</td>
+            <td style='vertical-align:middle' scope="col">{{ $item->price * .05 }}</td>
             <!-- edit item -->
-            <th scope="col"><i style='cursor: pointer;' type='submit' class='edit Edit icon' id='{{$item->id}}' aria-hidden='true'></i></th>
-            <th scope="col">
+            <td id='{{$item->id}}' class='edit' style='width:50px;cursor: pointer;' scope="col">
+                <button id='{{$item->id}}' style='background:none;width:0' type='submit' class="ui button">
+                    <i style='font-size:18px' id='{{$item->id}}' class="edit Edit icon"></i>
+                </button>
+            </td>
+            <td style='width:50px' scope="col">
                 <!-- delte item -->
                 <form action="{{ '/items/'.$item->id }}?order_no={{ $order->id }}" method='post'>
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
                     <input type="hidden" name="order_no" value="{{ $item->order_id }}">
-                    <button type='submit' style='border:none'><i class='fa fa-trash-o' aria-hidden='true'></i></button>
+                    <button style='background:none;width:0' type='submit' class="ui button">
+                        <i style='font-size:18px' class="trash icon"></i>
+                    </button>
                 </form>
-            </th>
-        </tr>   
+            </td>
+        </tr>
+
+    </tbody>
+   
 
 @endforeach
 
-
+    <tfoot calass='ui olive table'>
         <tr style='background:#bfe3e3;'>
-            <th scope="row"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">Total:</th>
-            <th scope="col">{{ $total_prices }}</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>   
-
-
-    </tbody>
+            <th scope="col"  colspan="9"></th>
+            <th scope="col" style='background:#e8e8e8'></th>
+            <th scope="col" style='background:#e8e8e8'><strong>{{ $total_prices }}</strong></th>
+            <th scope="col" style='background:#e8e8e8'></th>
+            <th scope="col" colspan="2" style='background:#e8e8e8'></th>
+        </tr>
+    </tfoot>
     </table>
 
 </div>
-
-<h1 class='add_item'>Add Item</h1>
 
 <div class="ui popup" data-id="123"></div>
 <div class="ui modal" data-id="567">
@@ -164,13 +178,6 @@ $( ".add_item" ).each(function(index) {
 
 
 
-
-
-
-
-
-
-
     // var popupLoading = '<i class="notched circle loading icon green"></i> wait...';
     // $('.vt').popup({
     //     inline: true,
@@ -207,11 +214,6 @@ $( ".add_item" ).each(function(index) {
 
 </script>
 @endsection('script')
-
-
-
-@include('partials.sidebar')
-
 
 
 @endsection('content')
