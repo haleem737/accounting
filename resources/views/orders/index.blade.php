@@ -3,7 +3,7 @@
 
 <!-- page title -->
 @section('title')
-Create New Order
+View Orders
 @endsection('title')
 
 <!-- custome css -->

@@ -11,16 +11,17 @@
 
 <title>@yield('title')</title>
 
-<!-- bootstrap framework -->
+<!-- bootstrap css  -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- online icons and fonts -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Archivo' rel='stylesheet'>
 
+<!-- semantic ui css -->
 <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
 
-<!-- semantic icons  -->
+<!-- semantic ui icons  -->
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.6/semantic.css">.
 
 
@@ -44,10 +45,14 @@
 
 
 <!-- Scripts -->
-<!-- jquery framework -->
+<!-- jquery js -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-<!-- semantic ui framework -->
+<!-- bootstrap js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+<!-- semantic ui js -->
 <script src="{{ asset('js/semantic.min.js') }}"></script>
 
 <!-- jquery typehead plugin -->
@@ -66,7 +71,7 @@ function closeNav() {
 </script>
 
 <script>
-$('#message').delay(2250).fadeOut("slow");
+$('#message').delay(2500).fadeOut("slow");
 var moveToLeft = 50 - (($("#message").width()) / ($('#message').parent().width()) * 100) / 2;
 $('#message').css('left' , moveToLeft + '%');
 </script>

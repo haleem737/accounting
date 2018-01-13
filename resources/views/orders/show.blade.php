@@ -3,17 +3,31 @@
 
 <!-- page title -->
 @section('title')
-Create New Order
+Order No. #{{sprintf("%04d", $order->id)}}
 @endsection('title')
 
 <!-- custome css -->
 @section('style')
 <style>
+#page-footer{
+display:none;
+}
 
+
+html {
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+}
+
+#page-footer{
+padding:0;
+}
 
 body{
 padding-top:50px;
 margin:0 6%;
+overflow-y:hidden !important;
+  padding-right: 0px !important;
 }
 
 i:hover{
@@ -41,7 +55,7 @@ vertical-align:bottom;
 
             <button class="ui primary button">Invoice</button>
             <button class="ui button">R. Voucher</button>
-              
+
         </div>
 
         <div class="col-md-6">
@@ -49,9 +63,9 @@ vertical-align:bottom;
             <h2 class="ui header"align='center'>ORDER NO
                 <span style='color:#F37021'><b>#{{sprintf("%04d", $order->id)}}</b></span>
                 <div class="sub header"><a style='color:#737373' href='/customers/{{$customer->id}}'>{{ $customer->co_name }} - {{ $customer->full_name }}</a></div>
-                
+
             </h2>
-        
+
         </div>
 
         <div class="col-md-3" align='right' style='margin:0'>
@@ -59,12 +73,12 @@ vertical-align:bottom;
             <button style='background:none;width:0' class="ui button">
                 <i style='font-size:18px' class="icon print"></i>
             </button>
-        
+
             <button class="ui basic button">
                 {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y') }}
             </button>
         </div>
-        
+
     </div>
 
     <div class="row">
@@ -84,7 +98,7 @@ vertical-align:bottom;
                 <th style='background:#f2f2f2' scope="col">Price</th>
                 <th scope="col">VAT 5%</th>
                 <th scope="col" colspan="2">
-                    <div class="ui small primary icon button add_item">
+                    <div id='addNewItem' data-toggle="modal" data-target="#multiModal" class="ui small primary icon button add_item">
                         <i class="plus icon"></i> Add Item
                     </div>
                 </th>
@@ -108,7 +122,7 @@ vertical-align:bottom;
                 <td style='vertical-align:middle;background:#f2f2f2' scope="col">{{ $item->price }}</td>
                 <td style='vertical-align:middle' scope="col">{{ number_format((float)$item->price * .05, 2, '.', '') }}</td>
                 <!-- edit item -->
-                <td id='{{$item->id}}' class='edit' style='width:50px;cursor: pointer;' scope="col">
+                <td id='{{$item->id}}' class='edit' style='width:50px;cursor: pointer;' scope="col" data-toggle="modal" data-target="#multiModal">
                     <button id='{{$item->id}}' style='background:none;width:0' type='submit' class="ui button">
                         <i style='font-size:18px' id='{{$item->id}}' class="edit Edit icon"></i>
                     </button>
@@ -119,15 +133,47 @@ vertical-align:bottom;
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                         <input type="hidden" name="order_no" value="{{ $item->order_id }}">
-                        <button style='background:none;width:0' type='submit' class="ui button">
+                        <button style='background:none;width:0' type='button' class="ui button" data-toggle="modal" data-target="#myModal">
                             <i style='font-size:18px' class="trash icon"></i>
                         </button>
+
+                        <!-- The Modal -->
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header text-center">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                        <h4 class="modal-title">Delte Item</h4>
+                                    </div>
+                                    <div class="col-md-4 pull-right">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <h3 align='left'><span style='font-weight:normal'>Are you sure you want to delete this item?</span></h3>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="ui basic button" data-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+
+                            </div>
+                            </div>
+                        </div>
+
                     </form>
                 </td>
             </tr>
 
         </tbody>
-    
+
 
     @endforeach
 
@@ -152,13 +198,35 @@ vertical-align:bottom;
 </div>
 
 
-<div class="ui popup" data-id="123"></div>
+<!-- Item Modal -->
+<div class="modal fade" id="multiModal">
 
-<div class="ui modal" data-id="567">
-    <i class="close icon"></i>
-    <div class="header text-center">Edit Item</div>
-    <div class="content">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div id='modalHeader' class="modal-header text-center">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><h3 class="modal-title">Edit Item</h3></div>
+                <div class="col-md-4 pull-right">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+            </div>
+
+            <!-- Modal body -->
+            <div class="multi-modal-body">
+                <h3 align='left'></h3>
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="ui basic button" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div> -->
+
+        </div>
     </div>
+
 </div>
 
 @section('script')
@@ -167,86 +235,59 @@ vertical-align:bottom;
 
 $(document).ready(function(){
 
-    $('.row-index').each(function( index ) {
-        $(this).html(index + 1);
-    });
+// items counter
+$('.row-index').each(function( index ) {
+    $(this).html(index + 1);
+});
 
-
-// edit item
+// edit item modal function
 $( ".edit" ).each(function(index) {
-    $(this).on("click", function(e){$('.ui.modal').modal({
+    $(this).on("click", function(e){
+        var url = "/items/" + e.target.id + "/edit?order_no={{ $order->id }}";
+        $('#modalHeader').html('<div class="col-md-4"></div><div class="col-md-4"><h3 class="modal-title">Edit Item</h3></div><div class="col-md-4 pull-right"><button type="button" class="close" data-dismiss="modal">&times;</button></div>');
+        $('.multi-modal-body').html('<img src="{{ asset('img/loading.gif') }}" style="display:block;margin:0 auto;padding:150px 0">');
+        $('.multi-modal-body').load(url,function(result){
+            $('#myModall2').modal({show:true});
+        });
+    });
+});
 
-// $('body').on('click', '.edit', function(e){$('.ui.modal').modal({
-
-            onShow: function(callback) {
-                    callback = $.isFunction(callback) ? callback : function(){};
-                    var $content = $(this).find('.content');
-                    $.get("/items/" + e.target.id + "/edit?order_no={{ $order->id }}", function(data) {
-                    $content.html(data);
-                });
-            },
-
-            onHidden: function(){
-                location.reload();
-            }
-
-        }).modal('show')
-
+// add new item modal function
+$('#addNewItem').click(function(){
+    var url = "/items/create?order_no={{ $order->id }}";
+    $('#modalHeader').html('<div class="col-md-4"></div><div class="col-md-4"><h3 class="modal-title">Add New Item</h3></div><div class="col-md-4 pull-right"><button type="button" class="close" data-dismiss="modal">&times;</button></div>');
+    $('.multi-modal-body').html('<img src="{{ asset('img/loading.gif') }}" style="display:block;margin:0 auto;padding:150px 0">');
+    $('.multi-modal-body').load(url,function(result){
+        $('#addItem').modal({show:true});
     });
 });
 
 
-// add new item to order
-$( ".add_item" ).each(function(index) {
-    $(this).on("click", function(e){$('.ui.modal').modal({
-
-// $('body').on('click', '.edit', function(e){$('.ui.modal').modal({
-
-            onShow: function(callback) {
-                    callback = $.isFunction(callback) ? callback : function(){};
-                    var $content = $(this).find('.content');
-                    $.get("/items/create?order_no={{ $order->id }}", function(data) {
-                    $content.html(data);
-                });
-            },
-
-            onHidden: function(){
-                location.reload();
-            }
-
-        }).modal('show')
-
-    });
-});
-
-
-
-
-    // var popupLoading = '<i class="notched circle loading icon green"></i> wait...';
-    // $('.vt').popup({
-    //     inline: true,
-    //     on: 'hover',
-    //     exclusive: true,
-    //     hoverable: true,
-    //     html: popupLoading,
-    //     variation: 'wide',
-    //     delay: {
-    //         show: 400,
-    //         hide: 400
-    //     },
-    //     onShow: function (el) { // load data (it could be called in an external function.)
-    //         var popup = this;
-    //         var popup_item_id;
-    //         popup.html(popupLoading);
-    //         $.ajax({
-    //             url: "/items/" + el.id + "?order_no={{ $order->id }}"
-    //         }).done(function(result) {
-    //             popup.html(result);
-    //         }).fail(function() {
-    //             popup.html('error');
-    //         });
-    //     }
-    // });
+// var popupLoading = '<i class="notched circle loading icon green"></i> wait...';
+// $('.vt').popup({
+//     inline: true,
+//     on: 'hover',
+//     exclusive: true,
+//     hoverable: true,
+//     html: popupLoading,
+//     variation: 'wide',
+//     delay: {
+//         show: 400,
+//         hide: 400
+//     },
+//     onShow: function (el) { // load data (it could be called in an external function.)
+//         var popup = this;
+//         var popup_item_id;
+//         popup.html(popupLoading);
+//         $.ajax({
+//             url: "/items/" + el.id + "?order_no={{ $order->id }}"
+//         }).done(function(result) {
+//             popup.html(result);
+//         }).fail(function() {
+//             popup.html('error');
+//         });
+//     }
+// });
 
 
 

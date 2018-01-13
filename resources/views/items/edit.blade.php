@@ -1,5 +1,5 @@
 <!-- extend master layout -->
-@extends('layouts.master')
+    @extends('layouts.master')
 
 <!-- page title -->
 @section('title')
@@ -8,6 +8,20 @@ Create New Order
 
 <!-- custome css -->
 @section('style')
+
+<style>
+
+#page-footer{
+display:none;
+}
+
+body{
+padding-top:50px;
+margin:0 6%;
+}
+
+</style>
+
 @endsection('style')
 
 
@@ -93,8 +107,9 @@ Create New Order
 
         </div>
 
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="UPDATE"/>
+        <div class="form-group pull-right">
+            <input type="submit" class="ui primary button" value="SAVE"/>
+            <button type="button" class="ui basic button" data-dismiss="modal">Cancel</button>
         </div>
 
     </form>
