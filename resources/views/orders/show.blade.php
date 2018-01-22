@@ -53,7 +53,8 @@ vertical-align:bottom;
 
         <div class="col-md-3">
 
-            <button class="ui primary button">Invoice</button>
+        <a href='/invoices/create?customer_id={{$customer->id}}&order_no={{$order->id}}'><button type="submit" class="ui primary button">Invoice</button></a>
+
             <button class="ui button">R. Voucher</button>
 
         </div>

@@ -117,7 +117,7 @@ margin:3px 1.3px;
 
     <div class="ui form" >
     <!-- data table inputs form -->
-    <form id='form' action='/items' method='POST' style='min-height:250px'>
+    <form id='form' action='/items' method='POST' style='min-height:200px'>
     {{ csrf_field() }}
 
         <div id='data-inputs' class='row text-center input-row'>
@@ -306,7 +306,8 @@ $('.ui.dropdown')
             $('[name="copy_company_name"]').val(value);
             $('#choose_company_error_message').css('display' , 'none');
         },
-        forceSelection: false
+        forceSelection: false,
+        fullTextSearch: true
     });
 });
 // get po number from po_no input value and copy it to hidden input (copy_po_no name to use with the form
